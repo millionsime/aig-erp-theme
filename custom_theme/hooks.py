@@ -5,6 +5,10 @@ app_description = "AIG theme logo coor"
 app_email = "simemillion@gmail.com"
 app_license = "mit"
 
+app_include_css = "/assets/custom_theme/css/custom_theme.css"
+app_include_js = "/assets/custom_theme/js/aig_desk.js"
+app_include_js = "/assets/custom_theme/js/aig_desk.js"
+
 # Apps
 # ------------------
 
