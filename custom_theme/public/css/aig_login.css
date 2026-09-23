@@ -1,0 +1,157 @@
+/* ============================================================
+   AIG login page theme
+   Scoped to body[data-path="login"] - zero core template edits.
+   Palette: AIG indigo #263075 with gold accent #C9A227.
+   ============================================================ */
+
+body[data-path="login"] {
+  min-height: 100vh;
+  background:
+    radial-gradient(1100px 560px at 85% -10%, rgba(201, 162, 39, 0.20), transparent 60%),
+    radial-gradient(900px 520px at -10% 110%, rgba(255, 255, 255, 0.10), transparent 55%),
+    linear-gradient(160deg, #1c2456 0%, #263075 55%, #34408f 100%);
+  background-attachment: fixed;
+}
+
+/* Hide core breadcrumbs/header/footer branding on the login route */
+body[data-path="login"] .page-breadcrumbs,
+body[data-path="login"] .page-header-wrapper,
+body[data-path="login"] .footer-logo-extension,
+body[data-path="login"] .page-footer {
+  display: none !important;
+}
+
+/* ---------- Card ---------- */
+body[data-path="login"] .login-content.page-card {
+  max-width: 440px;
+  margin: 8vh auto 40px;
+  border: 1px solid rgba(38, 48, 117, 0.10);
+  border-radius: 18px;
+  box-shadow:
+    0 24px 60px rgba(10, 14, 40, 0.35),
+    0 4px 14px rgba(10, 14, 40, 0.18);
+  padding: 40px 36px 32px;
+  animation: aig-card-in 0.45s ease both;
+}
+
+@keyframes aig-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Header: AIG logo on top, centered ---------- */
+body[data-path="login"] .page-card-head {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  margin-bottom: 26px;
+  border-bottom: none;
+}
+
+body[data-path="login"] .app-logo {
+  width: 96px !important;
+  height: 96px !important;
+  object-fit: contain;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 10px 22px rgba(38, 48, 117, 0.28));
+}
+
+body[data-path="login"] .page-card-head h4 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1c2456;
+  letter-spacing: 0.2px;
+  margin-bottom: 2px;
+}
+
+body[data-path="login"] .page-card-subtitle {
+  color: #6b7194;
+  font-size: 0.92rem;
+}
+
+/* ---------- Inputs ---------- */
+body[data-path="login"] .form-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3c4160;
+  margin-bottom: 6px;
+}
+
+body[data-path="login"] .form-control {
+  border: 1.5px solid #d6d9e8 !important;
+  border-radius: 12px !important;
+  background-color: #f8f9fd !important;
+  color: #1c2456 !important;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+body[data-path="login"] .form-control::placeholder {
+  color: #a3a8c3;
+}
+
+body[data-path="login"] .form-control:focus {
+  outline: none;
+  border-color: #263075;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(38, 48, 117, 0.12);
+}
+
+body[data-path="login"] .field-icon {
+  color: #7a80a3;
+}
+
+/* ---------- Button ---------- */
+body[data-path="login"] .btn-login,
+body[data-path="login"] .btn-login.btn-default,
+body[data-path="login"] form button[type="submit"] {
+  background-color: #263075 !important;
+  border: 1.5px solid #263075 !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 0.98rem;
+  height: 46px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(38, 48, 117, 0.30) !important;
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+body[data-path="login"] .btn-login:hover,
+body[data-path="login"] .btn-login:focus,
+body[data-path="login"] form button[type="submit"]:hover,
+body[data-path="login"] form button[type="submit"]:focus {
+  background-color: #1c2456 !important;
+  border-color: #1c2456 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(38, 48, 117, 0.38);
+}
+
+/* ---------- Links ---------- */
+body[data-path="login"] .forgot-password-message a,
+body[data-path="login"] .page-card-actions a {
+  color: #263075;
+  font-weight: 500;
+}
+
+body[data-path="login"] .forgot-password-message a:hover,
+body[data-path="login"] .page-card-actions a:hover {
+  color: #1c2456;
+}
+
+/* ---------- Error banner ---------- */
+body[data-path="login"] .login-error-banner {
+  border-radius: 10px;
+}

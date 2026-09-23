@@ -1,11 +1,45 @@
-function recolor_desktop_icons() {
-  document.querySelectorAll('img.app-icon, .sidebar-header img, .desktop-icon img').forEach(function(img) {
-    var match = img.src.match(/\/assets\/(frappe|erpnext|hrms)\/icons\/desktop_icons\/solid\/(.+\.svg)/);
-    if (match) {
-      img.src = img.src.replace(match[0], '/assets/custom_theme/icons/desktop_icons/solid/' + match[2]);
+// AIG theme: swap default ERP desktop icons with the themed black/yellow copies.
+// No core code is touched - we only rewrite asset URLs at runtime.
+
+const AIG_ICON_BASE = "/assets/custom_theme/icons/desktop_icons";
+
+// Matches icon URLs from frappe, erpnext or hrms, in any variant (solid, subtle, ...)
+const CORE_ICON_RE =
+  /\/assets\/(frappe|erpnext|hrms)\/icons\/desktop_icons\/([^/]+)\/([^/]+\.svg)/;
+
+// App brand logos rendered on the desk (Framework, Frappe HR tiles)
+const CORE_LOGO_RE = /\/assets\/(frappe|erpnext|hrms)\/images\/([^/]+\.svg)/;
+
+function remap_icon(img) {
+  const src = img.getAttribute("src") || "";
+  let themed = null;
+  const icon_match = src.match(CORE_ICON_RE);
+  if (icon_match) {
+    themed = `${AIG_ICON_BASE}/${icon_match[2]}/${icon_match[3]}`;
+  } else {
+    const logo_match = src.match(CORE_LOGO_RE);
+    // Only swap logos we actually ship a themed copy for.
+    if (logo_match) {
+      const themed_logo = `/assets/custom_theme/images/${logo_match[2]}`;
+      img.setAttribute("data-aig-themed-logo", themed_logo);
+      themed = themed_logo;
     }
-  });
+  }
+  if (themed && img.getAttribute("src") !== themed) {
+    img.setAttribute("src", themed);
+  }
 }
+
+function recolor_desktop_icons() {
+  document
+    .querySelectorAll('img[src*="/icons/desktop_icons/"], img[src*="-logo.svg"]')
+    .forEach(remap_icon);
+}
+
 recolor_desktop_icons();
+
+// The sidebar/workspace icons render after boot and re-render on navigation;
+// re-apply whenever the DOM changes. Remapped URLs no longer match the regex,
+// so this is a no-op for already-themed icons (no loop).
 const aig_icon_observer = new MutationObserver(recolor_desktop_icons);
 aig_icon_observer.observe(document.body, { childList: true, subtree: true });
