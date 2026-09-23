@@ -10,8 +10,8 @@ app_include_js = "/assets/custom_theme/js/aig_desk.js"
 
 # Auth pages (login, forgot password, etc.)
 # Bump ?v= when changing these assets so browsers drop their cached copy.
-web_include_css = "/assets/custom_theme/css/aig_login.css?v=3"
-web_include_js = "/assets/custom_theme/js/aig_login.js?v=3"
+web_include_css = "/assets/custom_theme/css/aig_login.css?v=4"
+web_include_js = "/assets/custom_theme/js/aig_login.js?v=4"
 
 # Apps
 # ------------------

@@ -151,6 +151,42 @@ body[data-path="login"] .page-card-actions a:hover {
   color: #1c2456;
 }
 
+/* ---------- Wordmark: Adama Investment Group (white 3D) ---------- */
+.aig-wordmark {
+  margin: 4vh auto 26px;
+  text-align: center;
+  animation: aig-card-in 0.5s ease both;
+}
+
+.aig-wordmark-title {
+  margin: 0;
+  font-size: clamp(1.9rem, 5vw, 3.1rem);
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #ffffff !important;
+  /* 3D: light top face -> shadow extrusion down-right -> soft gold glow */
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.55),
+    0 2px 0 #b9bfdd,
+    0 3px 0 #9aa2c9,
+    0 4px 0 #7a84b4,
+    0 5px 0 #5b669e,
+    0 6px 0 #3d4888,
+    0 7px 0 #263075,
+    0 10px 18px rgba(10, 14, 40, 0.55),
+    0 18px 42px rgba(201, 162, 39, 0.35);
+}
+
+body[data-path="login"] .aig-wordmark-rule {
+  width: 180px;
+  height: 3px;
+  margin: 16px auto 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #c9a227 25%, #ffffff 50%, #c9a227 75%, transparent);
+  box-shadow: 0 0 12px rgba(201, 162, 39, 0.55);
+}
+
 /* ---------- Error banner ---------- */
 body[data-path="login"] .login-error-banner {
   border-radius: 10px;
