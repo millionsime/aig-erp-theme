@@ -2,6 +2,7 @@
 // No core code is touched - we only rewrite asset URLs at runtime.
 
 const AIG_ICON_BASE = "/assets/custom_theme/icons/desktop_icons";
+const AIG_LOGO = "/assets/custom_theme/images/aig_logo.png";
 
 // Matches icon URLs from frappe, erpnext or hrms, in any variant (solid, subtle, ...)
 const CORE_ICON_RE =
@@ -30,10 +31,25 @@ function remap_icon(img) {
   }
 }
 
+// Header brand logo (desk navbar) and the boot splash image.
+// Server-side these come from Navbar Settings / Website Settings, but the
+// desktop page is also cached in localStorage client-side, so keep a
+// runtime swap as a fallback for stale caches.
+function swap_brand_logos() {
+  document
+    .querySelectorAll("#brand-logo, .navbar-home img, .splash img")
+    .forEach((img) => {
+      if (img.getAttribute("src") !== AIG_LOGO) {
+        img.setAttribute("src", AIG_LOGO);
+      }
+    });
+}
+
 function recolor_desktop_icons() {
   document
     .querySelectorAll('img[src*="/icons/desktop_icons/"], img[src*="-logo.svg"]')
     .forEach(remap_icon);
+  swap_brand_logos();
 }
 
 recolor_desktop_icons();

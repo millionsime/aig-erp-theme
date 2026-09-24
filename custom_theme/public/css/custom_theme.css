@@ -6,3 +6,10 @@
 .desktop-icon .icon-container {
   background-color: #263075 !important;
 }
+
+/* AIG logo in the desk header and the loading splash */
+.navbar-home #brand-logo,
+.splash img {
+  border-radius: 50%;
+  object-fit: contain;
+}
