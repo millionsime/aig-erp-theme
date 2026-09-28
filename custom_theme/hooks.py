@@ -32,6 +32,8 @@ fixtures = [
 	{"dt": "Purchase Taxes and Charges Template",
 	 "filters": [["company", "=", "Adama Investment Group"]]},
 	{"dt": "Module Def", "filters": [["name", "like", "AIG%"]]},
+	{"dt": "Print Format", "filters": [["name", "like", "AIG%"]]},
+	{"dt": "Workspace", "filters": [["name", "like", "AIG%"]]},
 ]
 # NOTE: custom DocTypes (AIG Committee Signoff, AIG Stock Migration Batch/Row)
 # cannot be exported as fixtures outside developer mode; they are created
