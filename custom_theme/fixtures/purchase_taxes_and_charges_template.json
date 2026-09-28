@@ -1,0 +1,41 @@
+[
+ {
+  "company": "Adama Investment Group",
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Purchase Taxes and Charges Template",
+  "is_default": 0,
+  "modified": "2026-09-25 14:56:33.006248",
+  "name": "Ethiopia Tax - AIG",
+  "tax_category": null,
+  "taxes": [
+   {
+    "account_currency": "ETB",
+    "account_head": "2131 - VAT Payable 15% - AIG",
+    "add_deduct_tax": "Add",
+    "allocate_full_amount_to_stock_items": 1,
+    "base_net_amount": 0.0,
+    "base_tax_amount": 0.0,
+    "base_tax_amount_after_discount_amount": 0.0,
+    "base_total": 0.0,
+    "category": "Total",
+    "charge_type": "On Net Total",
+    "cost_center": "Head Office - AIG",
+    "description": "VAT 15%",
+    "dont_recompute_tax": 0,
+    "included_in_paid_amount": 0,
+    "included_in_print_rate": 0,
+    "is_tax_withholding_account": 0,
+    "net_amount": 0.0,
+    "project": null,
+    "rate": 15.0,
+    "row_id": null,
+    "set_by_item_tax_template": 0,
+    "tax_amount": 0.0,
+    "tax_amount_after_discount_amount": 0.0,
+    "total": 0.0
+   }
+  ],
+  "title": "Ethiopia Tax"
+ }
+]

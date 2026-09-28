@@ -1,0 +1,58 @@
+[
+ {
+  "accounts": [
+   {
+    "account": "2133 - Withholding Tax Payable 3% - AIG",
+    "company": "Adama Investment Group"
+   }
+  ],
+  "category_name": "AIG 3% Withholding Tax",
+  "disable_cumulative_threshold": 0,
+  "disable_transaction_threshold": 0,
+  "docstatus": 0,
+  "doctype": "Tax Withholding Category",
+  "modified": "2026-09-25 14:56:33.154142",
+  "name": "AIG 3% Withholding Tax",
+  "rates": [
+   {
+    "cumulative_threshold": 0.0,
+    "from_date": "2026-07-08",
+    "single_threshold": 0.0,
+    "tax_withholding_group": null,
+    "tax_withholding_rate": 3.0,
+    "to_date": "2027-07-07"
+   }
+  ],
+  "round_off_tax_amount": 0,
+  "tax_deduction_basis": "Gross Total",
+  "tax_on_excess_amount": 0
+ },
+ {
+  "accounts": [
+   {
+    "account": "2132 - VAT Withholding Payable 7.5% - AIG",
+    "company": "Adama Investment Group"
+   }
+  ],
+  "category_name": "AIG 7.5% VAT Withholding",
+  "disable_cumulative_threshold": 0,
+  "disable_transaction_threshold": 0,
+  "docstatus": 0,
+  "doctype": "Tax Withholding Category",
+  "modified": "2026-09-25 14:56:33.138251",
+  "name": "AIG 7.5% VAT Withholding",
+  "rates": [
+   {
+    "cumulative_threshold": 0.0,
+    "from_date": "2026-07-08",
+    "single_threshold": 0.0,
+    "tax_withholding_group": null,
+    "tax_withholding_rate": 7.5,
+    "to_date": "2027-07-07"
+   }
+  ],
+  "round_off_tax_amount": 0,
+  "tax_deduction_basis": "Gross Total",
+  "tax_on_excess_amount": 0
+ }
+]

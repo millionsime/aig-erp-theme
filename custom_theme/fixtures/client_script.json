@@ -1,0 +1,123 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Purchase Order",
+  "enabled": 1,
+  "modified": "2026-09-25 16:03:40.136708",
+  "module": null,
+  "name": "AIG - Ethiopic Date (Purchase Order)",
+  "script": "// AIG - Ethiopian (Ge'ez) date display - READ-ONLY reference only.\n// The operative/posting date stays Gregorian. This display field stores\n// nothing (HTML fieldtype) and does not affect validation, fiscal periods,\n// or workflows. Algorithm verified against calendar anchors before deploy.\n(function () {\n\tconst MONTHS = [\"Meskerem\",\"Tikimt\",\"Hidar\",\"Tahsas\",\"Tir\",\"Yekatit\",\"Megabit\",\n\t\t\"Miyazya\",\"Ginbot\",\"Sene\",\"Hamle\",\"Nehase\",\"Pagume\"];\n\tconst EPOCH = 1724223; // JDN of 1 Meskerem 1 EC (Amete Mihret; leap years = 3 mod 4)\n\n\tfunction g2j(y, m, d) {\n\t\treturn Math.floor((1461 * (y + 4800 + Math.floor((m - 14) / 12))) / 4)\n\t\t\t+ Math.floor((367 * (m - 2 - 12 * Math.floor((m - 14) / 12))) / 12)\n\t\t\t- Math.floor((3 * Math.floor((y + 4900 + Math.floor((m - 14) / 12)) / 100)) / 4)\n\t\t\t+ d - 32075;\n\t}\n\tfunction j2e(jdn) {\n\t\tconst days = jdn - EPOCH;\n\t\tif (days < 0) return null;\n\t\tconst cycle = Math.floor(days / 1461);\n\t\tconst idx = days % 1461;\n\t\tlet year, doy;\n\t\tif (idx < 365) { year = 1; doy = idx; }\n\t\telse if (idx < 730) { year = 2; doy = idx - 365; }\n\t\telse if (idx < 1096) { year = 3; doy = idx - 730; }\n\t\telse { year = 4; doy = idx - 1096; }\n\t\tyear = cycle * 4 + year;\n\t\tlet month, day;\n\t\tif (doy < 360) { month = Math.floor(doy / 30) + 1; day = (doy % 30) + 1; }\n\t\telse { month = 13; day = doy - 359; }\n\t\treturn { year: year, month: month, day: day, monthName: MONTHS[month - 1] };\n\t}\n\tfunction toEth(greg) {\n\t\tif (!greg) return null;\n\t\tconst parts = greg.split(\"-\");\n\t\tif (parts.length !== 3) return null;\n\t\tconst y = +parts[0], m = +parts[1], d = +parts[2];\n\t\tif (!y || !m || !d) return null;\n\t\treturn j2e(g2j(y, m, d));\n\t}\n\tfunction update(frm) {\n\t\tconst f = frm.fields_dict.aig_eth_date_display;\n\t\tif (!f || !f.$wrapper) return;\n\t\tconst e = toEth(frm.doc.transaction_date);\n\t\tconst txt = e ? (e.day + \" \" + e.monthName + \" \" + e.year + \" EC\") : \"\\u2014\";\n\t\tf.$wrapper.html(\n\t\t\t'<div style=\"padding:2px 0;font-weight:500;color:#3d4657;\">'\n\t\t\t+ '<span title=\"Ethiopian (Ge\\u2019ez) calendar equivalent - display only\">'\n\t\t\t+ txt + '</span></div>'\n\t\t);\n\t}\n\tfrappe.ui.form.on(\"Purchase Order\", {\n\t\trefresh: update,\n\t\ttransaction_date: update\n\t});\n})();\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Journal Entry",
+  "enabled": 1,
+  "modified": "2026-09-25 16:03:40.521059",
+  "module": null,
+  "name": "AIG - Ethiopic Date (Journal Entry)",
+  "script": "// AIG - Ethiopian (Ge'ez) date display - READ-ONLY reference only.\n// The operative/posting date stays Gregorian. This display field stores\n// nothing (HTML fieldtype) and does not affect validation, fiscal periods,\n// or workflows. Algorithm verified against calendar anchors before deploy.\n(function () {\n\tconst MONTHS = [\"Meskerem\",\"Tikimt\",\"Hidar\",\"Tahsas\",\"Tir\",\"Yekatit\",\"Megabit\",\n\t\t\"Miyazya\",\"Ginbot\",\"Sene\",\"Hamle\",\"Nehase\",\"Pagume\"];\n\tconst EPOCH = 1724223; // JDN of 1 Meskerem 1 EC (Amete Mihret; leap years = 3 mod 4)\n\n\tfunction g2j(y, m, d) {\n\t\treturn Math.floor((1461 * (y + 4800 + Math.floor((m - 14) / 12))) / 4)\n\t\t\t+ Math.floor((367 * (m - 2 - 12 * Math.floor((m - 14) / 12))) / 12)\n\t\t\t- Math.floor((3 * Math.floor((y + 4900 + Math.floor((m - 14) / 12)) / 100)) / 4)\n\t\t\t+ d - 32075;\n\t}\n\tfunction j2e(jdn) {\n\t\tconst days = jdn - EPOCH;\n\t\tif (days < 0) return null;\n\t\tconst cycle = Math.floor(days / 1461);\n\t\tconst idx = days % 1461;\n\t\tlet year, doy;\n\t\tif (idx < 365) { year = 1; doy = idx; }\n\t\telse if (idx < 730) { year = 2; doy = idx - 365; }\n\t\telse if (idx < 1096) { year = 3; doy = idx - 730; }\n\t\telse { year = 4; doy = idx - 1096; }\n\t\tyear = cycle * 4 + year;\n\t\tlet month, day;\n\t\tif (doy < 360) { month = Math.floor(doy / 30) + 1; day = (doy % 30) + 1; }\n\t\telse { month = 13; day = doy - 359; }\n\t\treturn { year: year, month: month, day: day, monthName: MONTHS[month - 1] };\n\t}\n\tfunction toEth(greg) {\n\t\tif (!greg) return null;\n\t\tconst parts = greg.split(\"-\");\n\t\tif (parts.length !== 3) return null;\n\t\tconst y = +parts[0], m = +parts[1], d = +parts[2];\n\t\tif (!y || !m || !d) return null;\n\t\treturn j2e(g2j(y, m, d));\n\t}\n\tfunction update(frm) {\n\t\tconst f = frm.fields_dict.aig_eth_date_display;\n\t\tif (!f || !f.$wrapper) return;\n\t\tconst e = toEth(frm.doc.posting_date);\n\t\tconst txt = e ? (e.day + \" \" + e.monthName + \" \" + e.year + \" EC\") : \"\\u2014\";\n\t\tf.$wrapper.html(\n\t\t\t'<div style=\"padding:2px 0;font-weight:500;color:#3d4657;\">'\n\t\t\t+ '<span title=\"Ethiopian (Ge\\u2019ez) calendar equivalent - display only\">'\n\t\t\t+ txt + '</span></div>'\n\t\t);\n\t}\n\tfrappe.ui.form.on(\"Journal Entry\", {\n\t\trefresh: update,\n\t\tposting_date: update\n\t});\n})();\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Payment Entry",
+  "enabled": 1,
+  "modified": "2026-09-25 16:03:40.561620",
+  "module": null,
+  "name": "AIG - Ethiopic Date (Payment Entry)",
+  "script": "// AIG - Ethiopian (Ge'ez) date display - READ-ONLY reference only.\n// The operative/posting date stays Gregorian. This display field stores\n// nothing (HTML fieldtype) and does not affect validation, fiscal periods,\n// or workflows. Algorithm verified against calendar anchors before deploy.\n(function () {\n\tconst MONTHS = [\"Meskerem\",\"Tikimt\",\"Hidar\",\"Tahsas\",\"Tir\",\"Yekatit\",\"Megabit\",\n\t\t\"Miyazya\",\"Ginbot\",\"Sene\",\"Hamle\",\"Nehase\",\"Pagume\"];\n\tconst EPOCH = 1724223; // JDN of 1 Meskerem 1 EC (Amete Mihret; leap years = 3 mod 4)\n\n\tfunction g2j(y, m, d) {\n\t\treturn Math.floor((1461 * (y + 4800 + Math.floor((m - 14) / 12))) / 4)\n\t\t\t+ Math.floor((367 * (m - 2 - 12 * Math.floor((m - 14) / 12))) / 12)\n\t\t\t- Math.floor((3 * Math.floor((y + 4900 + Math.floor((m - 14) / 12)) / 100)) / 4)\n\t\t\t+ d - 32075;\n\t}\n\tfunction j2e(jdn) {\n\t\tconst days = jdn - EPOCH;\n\t\tif (days < 0) return null;\n\t\tconst cycle = Math.floor(days / 1461);\n\t\tconst idx = days % 1461;\n\t\tlet year, doy;\n\t\tif (idx < 365) { year = 1; doy = idx; }\n\t\telse if (idx < 730) { year = 2; doy = idx - 365; }\n\t\telse if (idx < 1096) { year = 3; doy = idx - 730; }\n\t\telse { year = 4; doy = idx - 1096; }\n\t\tyear = cycle * 4 + year;\n\t\tlet month, day;\n\t\tif (doy < 360) { month = Math.floor(doy / 30) + 1; day = (doy % 30) + 1; }\n\t\telse { month = 13; day = doy - 359; }\n\t\treturn { year: year, month: month, day: day, monthName: MONTHS[month - 1] };\n\t}\n\tfunction toEth(greg) {\n\t\tif (!greg) return null;\n\t\tconst parts = greg.split(\"-\");\n\t\tif (parts.length !== 3) return null;\n\t\tconst y = +parts[0], m = +parts[1], d = +parts[2];\n\t\tif (!y || !m || !d) return null;\n\t\treturn j2e(g2j(y, m, d));\n\t}\n\tfunction update(frm) {\n\t\tconst f = frm.fields_dict.aig_eth_date_display;\n\t\tif (!f || !f.$wrapper) return;\n\t\tconst e = toEth(frm.doc.posting_date);\n\t\tconst txt = e ? (e.day + \" \" + e.monthName + \" \" + e.year + \" EC\") : \"\\u2014\";\n\t\tf.$wrapper.html(\n\t\t\t'<div style=\"padding:2px 0;font-weight:500;color:#3d4657;\">'\n\t\t\t+ '<span title=\"Ethiopian (Ge\\u2019ez) calendar equivalent - display only\">'\n\t\t\t+ txt + '</span></div>'\n\t\t);\n\t}\n\tfrappe.ui.form.on(\"Payment Entry\", {\n\t\trefresh: update,\n\t\tposting_date: update\n\t});\n})();\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Attendance",
+  "enabled": 1,
+  "modified": "2026-09-25 16:03:40.592645",
+  "module": null,
+  "name": "AIG - Ethiopic Date (Attendance)",
+  "script": "// AIG - Ethiopian (Ge'ez) date display - READ-ONLY reference only.\n// The operative/posting date stays Gregorian. This display field stores\n// nothing (HTML fieldtype) and does not affect validation, fiscal periods,\n// or workflows. Algorithm verified against calendar anchors before deploy.\n(function () {\n\tconst MONTHS = [\"Meskerem\",\"Tikimt\",\"Hidar\",\"Tahsas\",\"Tir\",\"Yekatit\",\"Megabit\",\n\t\t\"Miyazya\",\"Ginbot\",\"Sene\",\"Hamle\",\"Nehase\",\"Pagume\"];\n\tconst EPOCH = 1724223; // JDN of 1 Meskerem 1 EC (Amete Mihret; leap years = 3 mod 4)\n\n\tfunction g2j(y, m, d) {\n\t\treturn Math.floor((1461 * (y + 4800 + Math.floor((m - 14) / 12))) / 4)\n\t\t\t+ Math.floor((367 * (m - 2 - 12 * Math.floor((m - 14) / 12))) / 12)\n\t\t\t- Math.floor((3 * Math.floor((y + 4900 + Math.floor((m - 14) / 12)) / 100)) / 4)\n\t\t\t+ d - 32075;\n\t}\n\tfunction j2e(jdn) {\n\t\tconst days = jdn - EPOCH;\n\t\tif (days < 0) return null;\n\t\tconst cycle = Math.floor(days / 1461);\n\t\tconst idx = days % 1461;\n\t\tlet year, doy;\n\t\tif (idx < 365) { year = 1; doy = idx; }\n\t\telse if (idx < 730) { year = 2; doy = idx - 365; }\n\t\telse if (idx < 1096) { year = 3; doy = idx - 730; }\n\t\telse { year = 4; doy = idx - 1096; }\n\t\tyear = cycle * 4 + year;\n\t\tlet month, day;\n\t\tif (doy < 360) { month = Math.floor(doy / 30) + 1; day = (doy % 30) + 1; }\n\t\telse { month = 13; day = doy - 359; }\n\t\treturn { year: year, month: month, day: day, monthName: MONTHS[month - 1] };\n\t}\n\tfunction toEth(greg) {\n\t\tif (!greg) return null;\n\t\tconst parts = greg.split(\"-\");\n\t\tif (parts.length !== 3) return null;\n\t\tconst y = +parts[0], m = +parts[1], d = +parts[2];\n\t\tif (!y || !m || !d) return null;\n\t\treturn j2e(g2j(y, m, d));\n\t}\n\tfunction update(frm) {\n\t\tconst f = frm.fields_dict.aig_eth_date_display;\n\t\tif (!f || !f.$wrapper) return;\n\t\tconst e = toEth(frm.doc.attendance_date);\n\t\tconst txt = e ? (e.day + \" \" + e.monthName + \" \" + e.year + \" EC\") : \"\\u2014\";\n\t\tf.$wrapper.html(\n\t\t\t'<div style=\"padding:2px 0;font-weight:500;color:#3d4657;\">'\n\t\t\t+ '<span title=\"Ethiopian (Ge\\u2019ez) calendar equivalent - display only\">'\n\t\t\t+ txt + '</span></div>'\n\t\t);\n\t}\n\tfrappe.ui.form.on(\"Attendance\", {\n\t\trefresh: update,\n\t\tattendance_date: update\n\t});\n})();\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Stock Entry",
+  "enabled": 1,
+  "modified": "2026-09-25 17:39:31.234342",
+  "module": null,
+  "name": "AIG - Row CC Scrub (Stock Entry)",
+  "script": "(function () {\n\tvar FLAG = \"__aig_cc_scrubbed\";\n\tfunction target_cc(frm) {\n\t\treturn frm.doc.aig_cost_center || null;\n\t}\n\tfunction apply(frm, v) {\n\t\tif (frm.doc.cost_center !== v) {\n\t\t\tfrappe.model.set_value(frm.doc.doctype, frm.doc.name, \"cost_center\", v);\n\t\t}\n\t}\n\tfunction scrub(frm, force) {\n\t\tvar target = target_cc(frm);\n\t\t// header: on a NEW doc, ERPNext injected the Company default CC. Until\n\t\t// the user picks the enterprise CC, clear it so permission checks pass.\n\t\tif (frm.doc.__islocal || force) {\n\t\t\tapply(frm, target || null);\n\t\t}\n\t\t(frm.doc.items || []).forEach(function (row) {\n\t\t\tvar want = target || null;\n\t\t\tif (row.cost_center && row.cost_center !== want) {\n\t\t\t\tfrappe.model.set_value(row.doctype, row.name, \"cost_center\", want);\n\t\t\t}\n\t\t});\n\t\tfrm.__aig_cc_scrubbed = true;\n\t}\n\tfrappe.ui.form.on(\"Stock Entry\", {\n\t\trefresh: function (frm) {\n\t\t\tif (!frm[FLAG]) { scrub(frm, false); frm[FLAG] = true; }\n\t\t},\n\t\taig_cost_center: function (frm) { scrub(frm, true); },\n\t\tstock_entry_type: function (frm) { scrub(frm, true); }\n\t});\n\tfrappe.ui.form.on(\"Stock Entry Item\", {\n\t\titem_code: function (frm) { setTimeout(function () { scrub(frm, false); }, 900); },\n\t\ts_warehouse: function (frm) { setTimeout(function () { scrub(frm, false); }, 900); },\n\t\tt_warehouse: function (frm) { setTimeout(function () { scrub(frm, false); }, 900); }\n\t});\n})();\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Material Request",
+  "enabled": 1,
+  "modified": "2026-09-25 17:39:31.468552",
+  "module": null,
+  "name": "AIG - Row CC Scrub (Material Request)",
+  "script": "(function () {\n\tvar FLAG = \"__aig_cc_scrubbed\";\n\tfunction target_cc(frm) {\n\t\treturn frm.doc.aig_cost_center || null;\n\t}\n\tfunction apply(frm, v) {\n\t\tif (frm.doc.cost_center !== v) {\n\t\t\tfrappe.model.set_value(frm.doc.doctype, frm.doc.name, \"cost_center\", v);\n\t\t}\n\t}\n\tfunction scrub(frm, force) {\n\t\tvar target = target_cc(frm);\n\t\t// header: on a NEW doc, ERPNext injected the Company default CC. Until\n\t\t// the user picks the enterprise CC, clear it so permission checks pass.\n\t\tif (frm.doc.__islocal || force) {\n\t\t\tapply(frm, target || null);\n\t\t}\n\t\t(frm.doc.items || []).forEach(function (row) {\n\t\t\tvar want = target || null;\n\t\t\tif (row.cost_center && row.cost_center !== want) {\n\t\t\t\tfrappe.model.set_value(row.doctype, row.name, \"cost_center\", want);\n\t\t\t}\n\t\t});\n\t\tfrm.__aig_cc_scrubbed = true;\n\t}\n\tfrappe.ui.form.on(\"Material Request\", {\n\t\trefresh: function (frm) {\n\t\t\tif (!frm[FLAG]) { scrub(frm, false); frm[FLAG] = true; }\n\t\t},\n\t\taig_cost_center: function (frm) { scrub(frm, true); },\n\t\tmaterial_request_type: function (frm) { scrub(frm, true); }\n\t});\n\tfrappe.ui.form.on(\"Material Request Item\", {\n\t\titem_code: function (frm) { setTimeout(function () { scrub(frm, false); }, 900); },\n\t\ts_warehouse: function (frm) { setTimeout(function () { scrub(frm, false); }, 900); },\n\t\tt_warehouse: function (frm) { setTimeout(function () { scrub(frm, false); }, 900); }\n\t});\n})();\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Purchase Order",
+  "enabled": 1,
+  "modified": "2026-09-25 17:39:31.476624",
+  "module": null,
+  "name": "AIG - Row CC Scrub (Purchase Order)",
+  "script": "(function () {\n\tvar FLAG = \"__aig_cc_scrubbed\";\n\tfunction target_cc(frm) {\n\t\treturn frm.doc.aig_cost_center || null;\n\t}\n\tfunction apply(frm, v) {\n\t\tif (frm.doc.cost_center !== v) {\n\t\t\tfrappe.model.set_value(frm.doc.doctype, frm.doc.name, \"cost_center\", v);\n\t\t}\n\t}\n\tfunction scrub(frm, force) {\n\t\tvar target = target_cc(frm);\n\t\t// header: on a NEW doc, ERPNext injected the Company default CC. Until\n\t\t// the user picks the enterprise CC, clear it so permission checks pass.\n\t\tif (frm.doc.__islocal || force) {\n\t\t\tapply(frm, target || null);\n\t\t}\n\t\t(frm.doc.items || []).forEach(function (row) {\n\t\t\tvar want = target || null;\n\t\t\tif (row.cost_center && row.cost_center !== want) {\n\t\t\t\tfrappe.model.set_value(row.doctype, row.name, \"cost_center\", want);\n\t\t\t}\n\t\t});\n\t\tfrm.__aig_cc_scrubbed = true;\n\t}\n\tfrappe.ui.form.on(\"Purchase Order\", {\n\t\trefresh: function (frm) {\n\t\t\tif (!frm[FLAG]) { scrub(frm, false); frm[FLAG] = true; }\n\t\t},\n\t\taig_cost_center: function (frm) { scrub(frm, true); },\n\t\tcompany: function (frm) { scrub(frm, true); }\n\t});\n\tfrappe.ui.form.on(\"Purchase Order Item\", {\n\t\titem_code: function (frm) { setTimeout(function () { scrub(frm, false); }, 900); },\n\t\ts_warehouse: function (frm) { setTimeout(function () { scrub(frm, false); }, 900); },\n\t\tt_warehouse: function (frm) { setTimeout(function () { scrub(frm, false); }, 900); }\n\t});\n})();\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Material Request",
+  "enabled": 1,
+  "modified": "2026-09-27 10:57:25.430098",
+  "module": null,
+  "name": "AIG - MR Default Type (End User)",
+  "script": "(function () {\n\tfunction is_end_user_only() {\n\t\tvar roles = frappe.user_roles || [];\n\t\treturn roles.indexOf(\"AIG End User\") >= 0\n\t\t\t&& roles.indexOf(\"AIG Procurement Officer\") < 0\n\t\t\t&& roles.indexOf(\"AIG Inventory Administrator\") < 0\n\t\t\t&& roles.indexOf(\"AIG Main Store Administrator\") < 0;\n\t}\n\tfrappe.ui.form.on(\"Material Request\", {\n\t\tonload: function (frm) {\n\t\t\tif (!is_end_user_only()) { return; }\n\t\t\tfrm.set_df_property(\"material_request_type\", \"read_only\", 1);\n\t\t\tif (frm.is_new() && frm.doc.material_request_type !== \"Material Issue\") {\n\t\t\t\tfrm.set_value(\"material_request_type\", \"Material Issue\");\n\t\t\t}\n\t\t}\n\t});\n})();",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Stock Entry",
+  "enabled": 1,
+  "modified": "2026-09-26 10:10:43.224138",
+  "module": "AIG HR",
+  "name": "AIG - SE CC Intercept",
+  "script": "// AIG - SE CC Intercept: ERPNext's async item-detail fill stamps the\n// Company default Cost Center (Head Office - AIG) onto rows. For\n// enterprise-scoped users that CC fails the doc-level CREATE check at Save\n// ('You need the create permission on Stock Entry'). This row-level handler\n// fires the instant the fill writes cost_center (model event, no timeouts)\n// and reverts the poison to the enterprise CC (header) or empty.\n(function () {\n\tvar POISON = \"Head Office - AIG\";\n\tfunction target(frm) {\n\t\treturn frm.doc.aig_cost_center || frm.doc.aig_dest_cost_center || null;\n\t}\n\tfrappe.ui.form.on(\"Stock Entry Item\", {\n\t\tcost_center: function (frm, cdt, cdn) {\n\t\t\tvar row = locals[cdt] && locals[cdt][cdn];\n\t\t\tif (!row || !row.cost_center) return;\n\t\t\tvar want = target(frm);\n\t\t\tif (row.cost_center === POISON && row.cost_center !== want) {\n\t\t\t\tfrappe.model.set_value(cdt, cdn, \"cost_center\", want || null);\n\t\t\t}\n\t\t}\n\t});\n\tfrappe.ui.form.on(\"Stock Entry\", {\n\t\trefresh: function (frm) {\n\t\t\t// a new doc must never carry the Company default as its dimension\n\t\t\tif (frm.doc.__islocal && frm.doc.aig_cost_center === POISON) {\n\t\t\t\tfrm.set_value(\"aig_cost_center\", null);\n\t\t\t}\n\t\t},\n\t\taig_cost_center: function (frm) {\n\t\t\tvar want = target(frm);\n\t\t\t(frm.doc.items || []).forEach(function (row) {\n\t\t\t\tif (row.cost_center === POISON && row.cost_center !== want) {\n\t\t\t\t\tfrappe.model.set_value(row.doctype, row.name, \"cost_center\", want || null);\n\t\t\t\t}\n\t\t\t});\n\t\t}\n\t});\n})();",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Material Request",
+  "enabled": 1,
+  "modified": "2026-09-26 10:31:04.146824",
+  "module": "AIG HR",
+  "name": "AIG - MR CC Intercept",
+  "script": "// AIG - MR CC Intercept: ERPNext/the CC-sync script can stamp the root CC\n// or Head Office onto a new Material Request. Enterprise users cannot read\n// such documents at doc level, which silently kills their workflow buttons.\n// This model-event guard instantly reverts those values on a new MR.\n(function () {\n\tvar POISON = [\"Adama Investment Group - AIG\", \"Head Office - AIG\"];\n\tfunction is_poison(v) {\n\t\treturn v && POISON.indexOf(v) !== -1;\n\t}\n\tfrappe.ui.form.on(\"Material Request\", {\n\t\taig_cost_center: function (frm) {\n\t\t\tif (frm.doc.__islocal && is_poison(frm.doc.aig_cost_center)) {\n\t\t\t\tfrm.set_value(\"aig_cost_center\", null);\n\t\t\t}\n\t\t}\n\t});\n\tfrappe.ui.form.on(\"Material Request Item\", {\n\t\tcost_center: function (frm, cdt, cdn) {\n\t\t\tvar row = locals[cdt] && locals[cdt][cdn];\n\t\t\tif (frm.doc.__islocal && row && is_poison(row.cost_center)) {\n\t\t\t\tfrappe.model.set_value(cdt, cdn, \"cost_center\", null);\n\t\t\t}\n\t\t}\n\t});\n})();",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Item",
+  "enabled": 1,
+  "modified": "2026-09-26 12:13:52.588840",
+  "module": "AIG HR",
+  "name": "AIG - Item Code Auto Hint",
+  "script": "// AIG - Item Code Auto Hint: demo users never type Item Codes -- the server\n// generates AIG-<group>-<sequence> on save. Make the field read-only with a\n// hint (Administrator keeps manual override).\n(function () {\n\tfrappe.ui.form.on(\"Item\", {\n\t\trefresh: function (frm) {\n\t\t\tif (frappe.session.user === \"Administrator\") return;\n\t\t\tvar df = frm.fields_dict.item_code;\n\t\t\tif (df) {\n\t\t\t\tdf.df.read_only = 1;\n\t\t\t\tdf.df.description = \"Leave empty -- AIG generates the code from the Item Group (AIG-<group>-<sequence>).\";\n\t\t\t\tfrm.refresh_field(\"item_code\");\n\t\t\t}\n\t\t}\n\t});\n})();",
+  "view": "Form"
+ }
+]

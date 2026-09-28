@@ -13,6 +13,36 @@ app_include_js = "/assets/custom_theme/js/aig_desk.js?v=2"
 web_include_css = "/assets/custom_theme/css/aig_login.css?v=4"
 web_include_js = "/assets/custom_theme/js/aig_login.js?v=4"
 
+# AIG configuration fixtures (2026-09-28): everything the site carried only in
+# its DB is exported here via `bench --site frontend export-fixtures` and
+# re-applied on every `bench migrate` on any deployment server. The phase-2/3
+# build-out scripts in ~/aig-erp-config/scripts remain the source of truth
+# for HOW these records were built; the fixtures capture the resulting state
+# for reproducible installs.
+fixtures = [
+	{"dt": "Custom Field", "filters": [["fieldname", "like", "aig%"]]},
+	{"dt": "Property Setter"},
+	{"dt": "Custom DocPerm"},
+	{"dt": "Server Script"},
+	{"dt": "Client Script"},
+	{"dt": "Workflow"},
+	{"dt": "Role", "filters": [["name", "like", "AIG%"]]},
+	{"dt": "User Permission"},
+	{"dt": "Tax Withholding Category", "filters": [["name", "like", "AIG%"]]},
+	{"dt": "Purchase Taxes and Charges Template",
+	 "filters": [["company", "=", "Adama Investment Group"]]},
+	{"dt": "Module Def", "filters": [["name", "like", "AIG%"]]},
+]
+# NOTE: custom DocTypes (AIG Committee Signoff, AIG Stock Migration Batch/Row)
+# cannot be exported as fixtures outside developer mode; they are created
+# idempotently by the script chain in ~/aig-erp-config/scripts (132 et al.),
+# which runs after migrate on a fresh install. The same chain also owns the
+# one non-'aig'-prefixed field (Purchase Receipt.model_42_handover_document).
+# Property Setter / Custom DocPerm are exported UNFILTERED on purpose: rows
+# created by hrms/erpnext syncs duplicate harmlessly on the target, while the
+# AIG rows (Company/Cost Center/Warehouse/Account/MR/PO/PR/PI/PE...) are the
+# ones that must travel.
+
 # Apps
 # ------------------
 

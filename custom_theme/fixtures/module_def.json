@@ -1,0 +1,24 @@
+[
+ {
+  "app_name": "custom_theme",
+  "custom": 0,
+  "docstatus": 0,
+  "doctype": "Module Def",
+  "modified": "2026-09-18 14:04:59.156439",
+  "module_name": "AIG Custom Theme",
+  "name": "AIG Custom Theme",
+  "package": null,
+  "restrict_to_domain": null
+ },
+ {
+  "app_name": "custom_app",
+  "custom": 0,
+  "docstatus": 0,
+  "doctype": "Module Def",
+  "modified": "2026-09-25 16:02:11.674535",
+  "module_name": "AIG HR",
+  "name": "AIG HR",
+  "package": null,
+  "restrict_to_domain": null
+ }
+]
