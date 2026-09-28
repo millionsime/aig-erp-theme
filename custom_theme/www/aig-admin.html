@@ -1,0 +1,341 @@
+{% extends "templates/web.html" %}
+
+{% block title %}AIG Admin Dashboard{% endblock %}
+
+{% block page_content %}
+<div class="aig-dash">
+  <style>
+    :root{
+      --navy:#0d1b34; --navy2:#122344; --ink:#0f172a; --muted:#64748b;
+      --gold:#d9a441; --gold2:#f0b95a; --bg:#f4f6fb; --card:#ffffff;
+      --line:#e6eaf2; --green:#10b981; --red:#ef4444; --blue:#3b82f6;
+      --violet:#8b5cf6; --cyan:#06b6d4; --amber:#f59e0b;
+      --shadow:0 10px 30px -12px rgba(13,27,52,.18);
+      --r:16px;
+    }
+    *{box-sizing:border-box}
+    .aig-dash{font-family:"Segoe UI",system-ui,-apple-system,sans-serif;
+      background:
+        radial-gradient(1200px 500px at 85% -10%, rgba(217,164,65,.12), transparent 60%),
+        radial-gradient(900px 420px at -10% 0%, rgba(59,130,246,.10), transparent 55%),
+        var(--bg);
+      min-height:100vh; margin:-1rem; padding:1.4rem 1.6rem 2.4rem; color:var(--ink)}
+    .aig-top{display:flex; align-items:center; justify-content:space-between;
+      background:linear-gradient(120deg,var(--navy) 0%,var(--navy2) 60%,#1a3059 100%);
+      border-radius:var(--r); padding:1.1rem 1.5rem; color:#fff; box-shadow:var(--shadow);
+      margin-bottom:1.3rem; position:relative; overflow:hidden}
+    .aig-top::after{content:""; position:absolute; right:-60px; top:-80px; width:260px;
+      height:260px; border-radius:50%; background:radial-gradient(circle,rgba(217,164,65,.25),transparent 65%)}
+    .aig-brand{display:flex; align-items:center; gap:14px}
+    .aig-logo{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--gold),#b9832e); font-weight:800; font-size:1.05rem;
+      color:#1a1305; letter-spacing:.5px; box-shadow:0 6px 18px -6px rgba(217,164,65,.7)}
+    .aig-brand h1{margin:0; font-size:1.15rem; font-weight:700; letter-spacing:.2px}
+    .aig-brand p{margin:2px 0 0; font-size:.78rem; color:#b9c4da}
+    .aig-top-right{display:flex; gap:10px; align-items:center; position:relative; z-index:1}
+    .aig-chip{background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.18);
+      padding:7px 14px; border-radius:999px; font-size:.76rem; color:#e8edf7}
+    .aig-refresh{cursor:pointer; border:none; background:linear-gradient(135deg,var(--gold),var(--gold2));
+      color:#201807; font-weight:700; padding:8px 16px; border-radius:999px; font-size:.78rem;
+      display:flex; gap:7px; align-items:center; box-shadow:0 6px 16px -6px rgba(217,164,65,.8)}
+    .aig-refresh:hover{transform:translateY(-1px)}
+    .aig-kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-bottom:1.3rem}
+    .aig-card{background:var(--card); border:1px solid var(--line); border-radius:var(--r);
+      padding:1.05rem 1.2rem; box-shadow:var(--shadow); position:relative; overflow:hidden;
+      transition:transform .15s ease, box-shadow .15s ease}
+    .aig-card:hover{transform:translateY(-3px); box-shadow:0 16px 34px -14px rgba(13,27,52,.28)}
+    .aig-card::before{content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--ac,var(--blue))}
+    .aig-kpi .aig-kpi-top{display:flex; justify-content:space-between; align-items:center}
+    .aig-kpi h3{margin:0; font-size:.72rem; text-transform:uppercase; letter-spacing:.9px; color:var(--muted); font-weight:600}
+    .aig-kpi .ico{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
+      background:color-mix(in srgb, var(--ac) 14%, white)}
+    .aig-kpi .ico svg{width:19px;height:19px;stroke:var(--ac)}
+    .aig-kpi .num{font-size:1.75rem; font-weight:800; margin-top:8px; letter-spacing:-.5px}
+    .aig-kpi .sub{font-size:.74rem; color:var(--muted); margin-top:2px}
+    .aig-kpi .sub b{color:var(--ac)}
+    .aig-grid{display:grid; grid-template-columns:1.15fr 1fr; gap:14px; margin-bottom:1.3rem}
+    @media(max-width:1100px){.aig-grid{grid-template-columns:1fr}}
+    .aig-card h2{margin:0 0 2px; font-size:.95rem; font-weight:700}
+    .aig-card .cap{font-size:.74rem; color:var(--muted); margin-bottom:1rem}
+    .aig-legend{display:flex; flex-wrap:wrap; gap:8px 16px; margin-top:12px}
+    .aig-legend span{display:flex; gap:7px; align-items:center; font-size:.76rem; color:#334155}
+    .aig-dot{width:10px;height:10px;border-radius:3px}
+    .aig-donut-wrap{display:flex; justify-content:center}
+    .aig-donut-c{font-size:1.6rem;font-weight:800;fill:var(--ink)}
+    .aig-donut-l{font-size:.6rem;fill:var(--muted);letter-spacing:1px}
+    .aig-bars .row{display:grid; grid-template-columns:150px 1fr 44px; gap:10px; align-items:center; margin:9px 0}
+    .aig-bars .lbl{font-size:.76rem; color:#334155; text-align:right; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    .aig-bars .track{background:#eef1f8; border-radius:999px; height:14px; overflow:hidden}
+    .aig-bars .fill{height:100%; border-radius:999px; background:linear-gradient(90deg,var(--c1),var(--c2));
+      width:0; transition:width .9s cubic-bezier(.22,1,.36,1)}
+    .aig-bars .val{font-size:.74rem; font-weight:700; color:var(--ink)}
+    .aig-pipe{display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+    .aig-step{display:flex; align-items:center; gap:8px}
+    .aig-step .box{background:var(--card); border:1.5px solid var(--line); border-radius:12px;
+      padding:8px 13px; text-align:center; min-width:104px}
+    .aig-step .box .n{font-size:1.25rem; font-weight:800}
+    .aig-step .box .t{font-size:.62rem; text-transform:uppercase; letter-spacing:.7px; color:var(--muted)}
+    .aig-step .box.hot{border-color:var(--gold); background:linear-gradient(180deg,#fffaf0,#fff)}
+    .aig-step .box.hot .n{color:#b9832e}
+    .aig-step .arr{color:#b6c0d4; font-size:1rem}
+    .aig-table{width:100%; border-collapse:collapse; font-size:.8rem}
+    .aig-table th{font-size:.66rem; text-transform:uppercase; letter-spacing:.8px; color:var(--muted);
+      text-align:left; padding:8px 10px; border-bottom:1px solid var(--line)}
+    .aig-table td{padding:9px 10px; border-bottom:1px solid #f0f3f9}
+    .aig-table tr:last-child td{border-bottom:none}
+    .aig-table a{color:var(--navy2); font-weight:600; text-decoration:none}
+    .aig-badge{padding:3px 10px; border-radius:999px; font-size:.68rem; font-weight:700; white-space:nowrap}
+    .b-committee{background:#fef3c7; color:#92400e}
+    .b-finance{background:#dbeafe; color:#1e40af}
+    .b-approved{background:#d1fae5; color:#065f46}
+    .b-draft{background:#e2e8f0; color:#475569}
+    .b-review{background:#ede9fe; color:#5b21b6}
+    .b-endorsed{background:#ccfbf1; color:#115e59}
+    .b-rejected{background:#fee2e2; color:#991b1b}
+    .b-generic{background:#eef1f8; color:#334155}
+    .aig-foot{display:flex; justify-content:space-between; font-size:.72rem; color:var(--muted); margin-top:1.2rem; padding:0 .3rem}
+    .aig-empty{color:var(--muted); font-size:.8rem; padding:14px 4px; text-align:center}
+  </style>
+
+  <div class="aig-top">
+    <div class="aig-brand">
+      <div class="aig-logo">AIG</div>
+      <div>
+        <h1>Adama Investment Group — Admin Dashboard</h1>
+        <p>Procurement &amp; payment control tower · site {{ site_name }}</p>
+      </div>
+    </div>
+    <div class="aig-top-right">
+      <span class="aig-chip" id="aig-clock"></span>
+      <button class="aig-refresh" onclick="location.reload()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>
+        Refresh
+      </button>
+    </div>
+  </div>
+
+  <div class="aig-kpis">
+    <div class="aig-card aig-kpi" style="--ac:#3b82f6">
+      <div class="aig-kpi-top"><h3>Purchase Requests</h3>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></div></div>
+      <div class="num">{{ data.kpi.mr_count }}</div>
+      <div class="sub"><b>{{ data.kpi.mr_open }}</b> awaiting action</div>
+    </div>
+    <div class="aig-card aig-kpi" style="--ac:#8b5cf6">
+      <div class="aig-kpi-top"><h3>Purchase Orders</h3>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div></div>
+      <div class="num">{{ data.kpi.po_count }}</div>
+      <div class="sub"><b>{{ data.kpi.po_review }}</b> in approval chain</div>
+    </div>
+    <div class="aig-card aig-kpi" style="--ac:#d9a441">
+      <div class="aig-kpi-top"><h3>PO Value (ETB)</h3>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div></div>
+      <div class="num">{{ data.kpi.po_value_fmt }}</div>
+      <div class="sub">committed spend</div>
+    </div>
+    <div class="aig-card aig-kpi" style="--ac:#10b981">
+      <div class="aig-kpi-top"><h3>Paid to Suppliers</h3>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div></div>
+      <div class="num">{{ data.kpi.pe_count }}</div>
+      <div class="sub">payment entries submitted</div>
+    </div>
+    <div class="aig-card aig-kpi" style="--ac:#06b6d4">
+      <div class="aig-kpi-top"><h3>Suppliers</h3>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/><path d="M3 7h18v10H3z"/></svg></div></div>
+      <div class="num">{{ data.kpi.supplier_count }}</div>
+      <div class="sub">{{ data.kpi.item_count }} items catalogued</div>
+    </div>
+    <div class="aig-card aig-kpi" style="--ac:#ef4444">
+      <div class="aig-kpi-top"><h3>Team</h3>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div></div>
+      <div class="num">{{ data.kpi.user_count }}</div>
+      <div class="sub">enabled users</div>
+    </div>
+  </div>
+
+  <div class="aig-grid">
+    <div class="aig-card">
+      <h2>Purchase Orders by Approval Stage</h2>
+      <div class="cap">Live workflow distribution — every order sits in exactly one stage</div>
+      <div class="aig-donut-wrap" id="po-donut"></div>
+      <div class="aig-legend" id="po-legend"></div>
+    </div>
+    <div class="aig-card aig-bars">
+      <h2>Material Requests by State</h2>
+      <div class="cap">From draft intake to approval — store route and purchase route combined</div>
+      <div id="mr-bars"></div>
+    </div>
+  </div>
+
+  <div class="aig-grid" style="grid-template-columns:1fr 1.15fr">
+    <div class="aig-card">
+      <h2>Approval Pipeline — Purchase Orders</h2>
+      <div class="cap">Counts per stage; gold boxes need a decision</div>
+      <div class="aig-pipe" id="po-pipe"></div>
+    </div>
+    <div class="aig-card">
+      <h2>Needs Attention</h2>
+      <div class="cap">Documents waiting on a human decision right now</div>
+      {% if data.pending %}
+      <table class="aig-table">
+        <thead><tr><th>Document</th><th>Supplier</th><th>Value (ETB)</th><th>Stage</th></tr></thead>
+        <tbody>
+        {% for p in data.pending %}
+          <tr>
+            <td><a href="/app/{{ p.doctype | lower | replace(' ', '-') }}/{{ p.name }}">{{ p.name }}</a></td>
+            <td>{{ p.supplier or "-" }}</td>
+            <td>{{ p.value_fmt }}</td>
+            <td><span class="aig-badge {{ p.badge }}">{{ p.state }}</span></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="aig-empty">Nothing waiting — the pipeline is clear. ✅</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="aig-grid" style="grid-template-columns:1.4fr 1fr">
+    <div class="aig-card">
+      <h2>Committed Spend Trend</h2>
+      <div class="cap">Purchase-order value per week (last 12 weeks, ETB)</div>
+      <div id="trend"></div>
+    </div>
+    <div class="aig-card">
+      <h2>Top Suppliers by PO Value</h2>
+      <div class="cap">Where the committed money goes</div>
+      <div id="sup-bars"></div>
+    </div>
+  </div>
+
+  <div class="aig-foot">
+    <span>AIG ERP · custom admin dashboard (not the default Frappe home)</span>
+    <span>Generated {{ data.generated }} · {{ data.user }}</span>
+  </div>
+
+  <script>
+    window.AIG_DATA = {{ data_json }};
+    (function () {
+      var D = window.AIG_DATA;
+
+      // clock chip
+      var el = document.getElementById("aig-clock");
+      function tick() {
+        el.textContent = new Date().toLocaleString("en-GB", {
+          weekday: "short", day: "2-digit", month: "short",
+          hour: "2-digit", minute: "2-digit", second: "2-digit" });
+      }
+      tick(); setInterval(tick, 1000);
+
+      var PAL = ["#3b82f6", "#8b5cf6", "#d9a441", "#10b981", "#06b6d4",
+                 "#ef4444", "#f59e0b", "#64748b"];
+
+      // ---- donut: PO by state ----
+      var donut = document.getElementById("po-donut");
+      var legend = document.getElementById("po-legend");
+      var po = D.po_by_state, totalPO = 0, i, s;
+      for (i = 0; i < po.length; i++) totalPO += po[i].count;
+      if (!totalPO) {
+        donut.innerHTML = '<div class="aig-empty">No purchase orders yet.</div>';
+      } else {
+        var R = 62, C = 2 * Math.PI * R, off = 0, segs = "";
+        for (i = 0; i < po.length; i++) {
+          var frac = po[i].count / totalPO, len = frac * C;
+          segs += '<circle r="' + R + '" cx="90" cy="90" fill="none" stroke="' +
+            PAL[i % PAL.length] + '" stroke-width="23" stroke-dasharray="' +
+            len + ' ' + (C - len) + '" stroke-dashoffset="' + (-off) +
+            '" transform="rotate(-90 90 90)" stroke-linecap="butt"/>';
+          off += len;
+          legend.innerHTML += '<span><i class="aig-dot" style="background:' +
+            PAL[i % PAL.length] + '"></i>' + po[i].state + " · " + po[i].count + "</span>";
+        }
+        donut.innerHTML = '<svg width="180" height="180" viewBox="0 0 180 180">' +
+          '<circle r="' + R + '" cx="90" cy="90" fill="none" stroke="#eef1f8" stroke-width="23"/>' +
+          segs + '<text x="90" y="86" text-anchor="middle" class="aig-donut-c">' +
+          totalPO + '</text><text x="90" y="104" text-anchor="middle" class="aig-donut-l">ORDERS</text></svg>';
+      }
+
+      // ---- horizontal bars helper ----
+      function bars(container, rows, valKey, labelKey, colors) {
+        var host = document.getElementById(container);
+        if (!rows.length) {
+          host.innerHTML = '<div class="aig-empty">No data yet.</div>';
+          return;
+        }
+        var max = 0, i;
+        for (i = 0; i < rows.length; i++) max = Math.max(max, rows[i][valKey]);
+        if (!max) max = 1;
+        var html = "";
+        for (i = 0; i < rows.length; i++) {
+          var w = Math.max(3, Math.round(rows[i][valKey] / max * 100));
+          var c = colors ? colors[i % colors.length] : PAL[i % PAL.length];
+          html += '<div class="row"><div class="lbl" title="' + rows[i][labelKey] + '">' +
+            rows[i][labelKey] + '</div><div class="track"><div class="fill" style="' +
+            '--c1:' + c + ';--c2:' + c + 'CC" data-w="' + w + '"></div></div>' +
+            '<div class="val">' + rows[i][valKey + "_fmt"] + '</div></div>';
+        }
+        host.innerHTML = html;
+        requestAnimationFrame(function () {
+          var fills = host.querySelectorAll(".fill");
+          setTimeout(function () {
+            for (var j = 0; j < fills.length; j++)
+              fills[j].style.width = fills[j].getAttribute("data-w") + "%";
+          }, 60);
+        });
+      }
+      bars("mr-bars", D.mr_by_state, "count", "state", ["#3b82f6", "#8b5cf6", "#d9a441", "#10b981", "#06b6d4", "#ef4444", "#64748b"]);
+      bars("sup-bars", D.top_suppliers, "value", "supplier", ["#d9a441", "#8b5cf6", "#3b82f6", "#10b981", "#ef4444"]);
+
+      // ---- pipeline stepper ----
+      var pipe = document.getElementById("po-pipe"), ph = "";
+      var order = D.pipeline, hot = { "Pending Committee Signoff": 1, "Pending Finance Signoff": 1, "Pending Enterprise Head Approval": 1, "Pending Corporate Approval": 1, "Pending CEO Approval": 1 };
+      for (i = 0; i < order.length; i++) {
+        s = order[i];
+        if (!s.count) continue;
+        ph += '<div class="aig-step"><div class="box' + (hot[s.state] ? " hot" : "") +
+          '"><div class="n">' + s.count + '</div><div class="t">' + s.state.replace("Pending ", "") +
+          '</div></div>' + (i < order.length - 1 ? '<span class="arr">→</span>' : "") + '</div>';
+      }
+      pipe.innerHTML = ph || '<div class="aig-empty">Pipeline empty.</div>';
+
+      // ---- trend area/line ----
+      var trend = D.po_trend, tv = document.getElementById("trend");
+      var tmax = 0, tsum = 0, k;
+      for (k = 0; k < trend.length; k++) { tmax = Math.max(tmax, trend[k].value); tsum += trend[k].value; }
+      if (!tsum) {
+        tv.innerHTML = '<div class="aig-empty">No purchase-order value recorded in the last 12 weeks.</div>';
+      } else {
+        if (!tmax) tmax = 1;
+        var W = 560, H = 170, pad = 28, pts = "", fill, j;
+        var n = trend.length, step = (W - pad * 2) / Math.max(1, n - 1);
+        for (j = 0; j < n; j++) {
+          var x = pad + j * step;
+          var y = H - pad - (trend[j].value / tmax) * (H - pad * 2);
+          pts += x + "," + y + " ";
+        }
+        fill = '<polygon points="' + pad + "," + (H - pad) + " " + pts.trim() +
+          " " + (pad + (n - 1) * step) + "," + (H - pad) +
+          '" fill="url(#tg)" opacity=".55"/>';
+        var labels = "", dots = "";
+        for (j = 0; j < n; j++) {
+          var x2 = pad + j * step;
+          var y2 = H - pad - (trend[j].value / tmax) * (H - pad * 2);
+          dots += '<circle cx="' + x2 + '" cy="' + y2 + '" r="3.4" fill="#fff" stroke="#d9a441" stroke-width="2.2"/>';
+          if (trend[j].value) labels += '<text x="' + x2 + '" y="' + (y2 - 9) +
+            '" text-anchor="middle" font-size="9.5" fill="#64748b" font-weight="700">' +
+            trend[j].short + '</text>';
+        }
+        tv.innerHTML = '<svg viewBox="0 0 ' + W + " " + H + '" style="width:100%">' +
+          '<defs><linearGradient id="tg" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0" stop-color="#d9a441" stop-opacity=".5"/>' +
+          '<stop offset="1" stop-color="#d9a441" stop-opacity=".04"/></linearGradient></defs>' +
+          '<line x1="' + pad + '" y1="' + (H - pad) + '" x2="' + (W - pad) + '" y2="' + (H - pad) +
+          '" stroke="#e6eaf2" stroke-width="1.5"/>' + fill +
+          '<polyline points="' + pts.trim() + '" fill="none" stroke="#d9a441" stroke-width="2.6" stroke-linejoin="round"/>' +
+          dots + labels + "</svg>";
+      }
+    })();
+  </script>
+</div>
+{% endblock %}
