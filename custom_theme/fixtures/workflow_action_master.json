@@ -1,0 +1,16 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-29 09:34:13.432215",
+  "name": "Submit Purchase Request",
+  "workflow_action_name": "Submit Purchase Request"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-29 09:34:13.441940",
+  "name": "Approve & Assign",
+  "workflow_action_name": "Approve & Assign"
+ }
+]

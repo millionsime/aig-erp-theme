@@ -1,0 +1,134 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "autoname": "hash",
+ "creation": "2026-09-26 12:56:35.198824",
+ "custom": 1,
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "parent_po",
+  "committee_member",
+  "member_role",
+  "decision",
+  "decision_date",
+  "comments"
+ ],
+ "fields": [
+  {
+   "fieldname": "parent_po",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Purchase Order",
+   "options": "Purchase Order",
+   "reqd": 1
+  },
+  {
+   "fieldname": "committee_member",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Committee Member",
+   "options": "User",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "default": "AIG Purchase Committee",
+   "fieldname": "member_role",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Role",
+   "options": "Role",
+   "read_only": 1
+  },
+  {
+   "fieldname": "decision",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Decision",
+   "options": "Approve\nReject",
+   "reqd": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "decision_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Decision Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "comments",
+   "fieldtype": "Small Text",
+   "label": "Comments"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-29 16:36:53.188252",
+ "modified_by": "Administrator",
+ "module": "AIG Custom Theme",
+ "name": "AIG Committee Signoff",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "if_owner": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "AIG Purchase Committee",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "AIG Inventory Administrator",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "AIG Internal Auditor",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

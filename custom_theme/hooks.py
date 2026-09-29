@@ -34,6 +34,8 @@ fixtures = [
 	{"dt": "Module Def", "filters": [["name", "like", "AIG%"]]},
 	{"dt": "Print Format", "filters": [["name", "like", "AIG%"]]},
 	{"dt": "Workspace", "filters": [["name", "like", "AIG%"]]},
+	{"dt": "Workflow State", "filters": [["name", "in", ["Pending Head Approval"]]]},
+	{"dt": "Workflow Action Master", "filters": [["name", "in", ["Submit Purchase Request", "Approve & Assign"]]]},
 ]
 # NOTE: custom DocTypes (AIG Committee Signoff, AIG Stock Migration Batch/Row)
 # cannot be exported as fixtures outside developer mode; they are created

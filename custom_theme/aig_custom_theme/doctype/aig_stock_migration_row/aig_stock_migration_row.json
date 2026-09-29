@@ -1,0 +1,318 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-09-25 11:05:35.632550",
+ "custom": 1,
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "prov_section",
+  "source_workbook",
+  "sheet_name",
+  "source_row_no",
+  "source_ref",
+  "raw_section",
+  "raw_item_code",
+  "raw_item_name",
+  "column_break_r1",
+  "raw_local_name",
+  "raw_qty",
+  "column_break_r2",
+  "raw_uom",
+  "raw_rate",
+  "column_break_r3",
+  "raw_date",
+  "raw_store",
+  "column_break_r4",
+  "raw_department",
+  "raw_enterprise",
+  "raw_notes",
+  "map_section",
+  "record_type",
+  "item_code",
+  "column_break_m1",
+  "item_group",
+  "warehouse",
+  "column_break_m2",
+  "cost_center",
+  "uom",
+  "column_break_m3",
+  "qty",
+  "valuation_rate",
+  "posting_date",
+  "val_section",
+  "validation_status",
+  "is_duplicate_candidate",
+  "column_break_v1",
+  "date_is_excel_serial",
+  "date_converted",
+  "column_break_v2",
+  "imported",
+  "target_document",
+  "validation_messages"
+ ],
+ "fields": [
+  {
+   "fieldname": "prov_section",
+   "fieldtype": "Section Break",
+   "label": "Provenance"
+  },
+  {
+   "fieldname": "source_workbook",
+   "fieldtype": "Data",
+   "label": "Source Workbook"
+  },
+  {
+   "fieldname": "sheet_name",
+   "fieldtype": "Data",
+   "label": "Sheet Name"
+  },
+  {
+   "fieldname": "source_row_no",
+   "fieldtype": "Int",
+   "label": "Source Row No."
+  },
+  {
+   "fieldname": "source_ref",
+   "fieldtype": "Data",
+   "label": "Source Row Reference"
+  },
+  {
+   "fieldname": "raw_section",
+   "fieldtype": "Section Break",
+   "label": "Raw Source Values (preserved, never overwritten)"
+  },
+  {
+   "fieldname": "raw_item_code",
+   "fieldtype": "Data",
+   "label": "Raw Item Code"
+  },
+  {
+   "fieldname": "raw_item_name",
+   "fieldtype": "Data",
+   "label": "Raw Item Name"
+  },
+  {
+   "fieldname": "column_break_r1",
+   "fieldtype": "Column Break",
+   "label": "Column Break R1"
+  },
+  {
+   "fieldname": "raw_local_name",
+   "fieldtype": "Data",
+   "label": "Raw Local/Language Name"
+  },
+  {
+   "fieldname": "raw_qty",
+   "fieldtype": "Data",
+   "label": "Raw Quantity (as text)"
+  },
+  {
+   "fieldname": "column_break_r2",
+   "fieldtype": "Column Break",
+   "label": "Column Break R2"
+  },
+  {
+   "fieldname": "raw_uom",
+   "fieldtype": "Data",
+   "label": "Raw UOM"
+  },
+  {
+   "fieldname": "raw_rate",
+   "fieldtype": "Data",
+   "label": "Raw Rate/Price (as text)"
+  },
+  {
+   "fieldname": "column_break_r3",
+   "fieldtype": "Column Break",
+   "label": "Column Break R3"
+  },
+  {
+   "fieldname": "raw_date",
+   "fieldtype": "Data",
+   "label": "Raw Date (as text / Excel serial)"
+  },
+  {
+   "fieldname": "raw_store",
+   "fieldtype": "Data",
+   "label": "Raw Store"
+  },
+  {
+   "fieldname": "column_break_r4",
+   "fieldtype": "Column Break",
+   "label": "Column Break R4"
+  },
+  {
+   "fieldname": "raw_department",
+   "fieldtype": "Data",
+   "label": "Raw Department"
+  },
+  {
+   "fieldname": "raw_enterprise",
+   "fieldtype": "Data",
+   "label": "Raw Enterprise"
+  },
+  {
+   "fieldname": "raw_notes",
+   "fieldtype": "Small Text",
+   "label": "Raw Notes"
+  },
+  {
+   "fieldname": "map_section",
+   "fieldtype": "Section Break",
+   "label": "Mapped ERP Values (require explicit mapping)"
+  },
+  {
+   "default": "Unknown",
+   "fieldname": "record_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Record Type",
+   "options": "\nOpening Balance\nHistorical Movement\nProperty / Fixed Asset\nForm / Voucher\nBiological Asset\nUnknown"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Mapped Item",
+   "options": "Item"
+  },
+  {
+   "fieldname": "column_break_m1",
+   "fieldtype": "Column Break",
+   "label": "Column Break M1"
+  },
+  {
+   "fieldname": "item_group",
+   "fieldtype": "Link",
+   "label": "Mapped Item Group",
+   "options": "Item Group"
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Mapped Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "column_break_m2",
+   "fieldtype": "Column Break",
+   "label": "Column Break M2"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Mapped Cost Center",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "Mapped UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "column_break_m3",
+   "fieldtype": "Column Break",
+   "label": "Column Break M3"
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Float",
+   "label": "Mapped Quantity"
+  },
+  {
+   "fieldname": "valuation_rate",
+   "fieldtype": "Currency",
+   "label": "Mapped Valuation Rate"
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Mapped Posting/Effective Date"
+  },
+  {
+   "fieldname": "val_section",
+   "fieldtype": "Section Break",
+   "label": "Validation (auto)"
+  },
+  {
+   "default": "Pending",
+   "fieldname": "validation_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Validation Status",
+   "options": "Pending\nValid\nWarning\nError",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_duplicate_candidate",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Duplicate Candidate",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_v1",
+   "fieldtype": "Column Break",
+   "label": "Column Break V1"
+  },
+  {
+   "default": "0",
+   "fieldname": "date_is_excel_serial",
+   "fieldtype": "Check",
+   "label": "Raw Date Was Excel Serial",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_converted",
+   "fieldtype": "Date",
+   "label": "Converted Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_v2",
+   "fieldtype": "Column Break",
+   "label": "Column Break V2"
+  },
+  {
+   "default": "0",
+   "fieldname": "imported",
+   "fieldtype": "Check",
+   "label": "Imported",
+   "read_only": 1
+  },
+  {
+   "fieldname": "target_document",
+   "fieldtype": "Data",
+   "label": "Target Document (created on import)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "validation_messages",
+   "fieldtype": "Small Text",
+   "label": "Validation Messages",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-09-29 16:36:53.787083",
+ "modified_by": "Administrator",
+ "module": "AIG Custom Theme",
+ "name": "AIG Stock Migration Row",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

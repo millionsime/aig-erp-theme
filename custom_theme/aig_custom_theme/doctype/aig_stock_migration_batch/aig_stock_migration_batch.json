@@ -1,0 +1,252 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "autoname": "AIG-MIG-.#####",
+ "creation": "2026-09-25 11:05:36.324158",
+ "custom": 1,
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "source_section",
+  "source_workbook",
+  "source_file",
+  "sheet_name",
+  "column_break_1",
+  "enterprise",
+  "effective_date",
+  "valuation_method",
+  "approval_section",
+  "status",
+  "approved_by",
+  "column_break_2",
+  "approved_on",
+  "separate_history",
+  "recon_section",
+  "total_rows",
+  "valid_rows",
+  "column_break_3",
+  "warning_rows",
+  "error_rows",
+  "column_break_4",
+  "duplicate_rows",
+  "reconciliation_note",
+  "rows_section",
+  "rows"
+ ],
+ "fields": [
+  {
+   "fieldname": "source_section",
+   "fieldtype": "Section Break",
+   "label": "Source"
+  },
+  {
+   "fieldname": "source_workbook",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Source Workbook",
+   "reqd": 1
+  },
+  {
+   "fieldname": "source_file",
+   "fieldtype": "Attach",
+   "label": "Source File (evidence)"
+  },
+  {
+   "fieldname": "sheet_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Sheet Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break",
+   "label": "Column Break 1"
+  },
+  {
+   "fieldname": "enterprise",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Enterprise (Cost Center)",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "effective_date",
+   "fieldtype": "Date",
+   "label": "Opening Balance Effective Date"
+  },
+  {
+   "fieldname": "valuation_method",
+   "fieldtype": "Select",
+   "label": "Valuation Method",
+   "options": "\nMoving Average\nFIFO\nManual (from source)"
+  },
+  {
+   "fieldname": "approval_section",
+   "fieldtype": "Section Break",
+   "label": "Control"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Draft\nStaged\nValidated\nApproved\nImported\nRejected",
+   "reqd": 1
+  },
+  {
+   "fieldname": "approved_by",
+   "fieldtype": "Link",
+   "label": "Approved By",
+   "options": "User",
+   "read_only_depends_on": "eval:doc.status!='Approved'"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break",
+   "label": "Column Break 2"
+  },
+  {
+   "fieldname": "approved_on",
+   "fieldtype": "Datetime",
+   "label": "Approved On"
+  },
+  {
+   "default": "0",
+   "fieldname": "separate_history",
+   "fieldtype": "Check",
+   "label": "Keep Historical Movements Separate (do not post as opening)"
+  },
+  {
+   "fieldname": "recon_section",
+   "fieldtype": "Section Break",
+   "label": "Reconciliation (auto)"
+  },
+  {
+   "fieldname": "total_rows",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Total Rows",
+   "read_only": 1
+  },
+  {
+   "fieldname": "valid_rows",
+   "fieldtype": "Int",
+   "label": "Valid Rows",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break",
+   "label": "Column Break 3"
+  },
+  {
+   "fieldname": "warning_rows",
+   "fieldtype": "Int",
+   "label": "Warning Rows",
+   "read_only": 1
+  },
+  {
+   "fieldname": "error_rows",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Error Rows",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break",
+   "label": "Column Break 4"
+  },
+  {
+   "fieldname": "duplicate_rows",
+   "fieldtype": "Int",
+   "label": "Duplicate Candidates",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reconciliation_note",
+   "fieldtype": "Small Text",
+   "label": "Reconciliation Note"
+  },
+  {
+   "fieldname": "rows_section",
+   "fieldtype": "Section Break",
+   "label": "Staged Rows"
+  },
+  {
+   "fieldname": "rows",
+   "fieldtype": "Table",
+   "label": "Staged Rows",
+   "options": "AIG Stock Migration Row"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-29 16:36:53.784670",
+ "modified_by": "Administrator",
+ "module": "AIG Custom Theme",
+ "name": "AIG Stock Migration Batch",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "AIG Inventory Administrator",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "AIG Internal Auditor",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "AIG Finance",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "source_workbook",
+ "track_changes": 1
+}
