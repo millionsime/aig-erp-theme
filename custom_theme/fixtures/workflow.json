@@ -457,7 +457,7 @@
   "document_type": "Material Request",
   "enable_action_confirmation": 0,
   "is_active": 1,
-  "modified": "2026-09-26 17:00:55.093124",
+  "modified": "2026-09-29 09:37:51.278211",
   "name": "AIG Stock Request Approval",
   "override_status": 1,
   "send_email_alert": 0,
@@ -559,9 +559,45 @@
     "update_field": null,
     "update_value": null,
     "workflow_builder_id": null
+   },
+   {
+    "allow_edit": "AIG Enterprise Head",
+    "avoid_status_override": 0,
+    "doc_status": "1",
+    "evaluate_as_expression": 0,
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "send_email": 1,
+    "state": "Pending Head Approval",
+    "update_field": null,
+    "update_value": null,
+    "workflow_builder_id": null
    }
   ],
   "transitions": [
+   {
+    "action": "Submit Purchase Request",
+    "allow_self_approval": 1,
+    "allowed": "AIG End User",
+    "condition": "doc.material_request_type == \"Purchase\"",
+    "next_state": "Pending Head Approval",
+    "send_email_to_creator": 0,
+    "state": "Draft",
+    "transition_tasks": null,
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Approve & Assign",
+    "allow_self_approval": 1,
+    "allowed": "AIG Main Store Administrator",
+    "condition": "doc.material_request_type == \"Purchase\" and doc.aig_assigned_procurement_officer",
+    "next_state": "Approved",
+    "send_email_to_creator": 0,
+    "state": "Pending Store Review",
+    "transition_tasks": null,
+    "workflow_builder_id": null
+   },
    {
     "action": "Submit Request",
     "allow_self_approval": 1,
@@ -577,7 +613,7 @@
     "action": "Approve",
     "allow_self_approval": 1,
     "allowed": "AIG Main Store Administrator",
-    "condition": null,
+    "condition": "doc.material_request_type == \"Material Issue\"",
     "next_state": "Pending Enterprise Approval",
     "send_email_to_creator": 0,
     "state": "Pending Store Review",
@@ -658,6 +694,28 @@
     "next_state": "Rejected",
     "send_email_to_creator": 0,
     "state": "Pending Enterprise Head Endorsement",
+    "transition_tasks": null,
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "AIG Enterprise Head",
+    "condition": null,
+    "next_state": "Pending Store Review",
+    "send_email_to_creator": 0,
+    "state": "Pending Head Approval",
+    "transition_tasks": null,
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Reject",
+    "allow_self_approval": 1,
+    "allowed": "AIG Enterprise Head",
+    "condition": null,
+    "next_state": "Rejected",
+    "send_email_to_creator": 0,
+    "state": "Pending Head Approval",
     "transition_tasks": null,
     "workflow_builder_id": null
    }

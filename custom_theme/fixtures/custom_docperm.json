@@ -2118,7 +2118,7 @@
   "impersonate": 0,
   "import": 0,
   "mask": 0,
-  "modified": "2026-09-24 15:49:16.202633",
+  "modified": "2026-09-28 17:18:22.368048",
   "name": "6nq7nv3kj9",
   "parent": "Purchase Order",
   "permlevel": 0,
@@ -2128,8 +2128,8 @@
   "role": "AIG Finance",
   "select": 0,
   "share": 0,
-  "submit": 0,
-  "write": 0
+  "submit": 1,
+  "write": 1
  },
  {
   "amend": 1,
@@ -5212,7 +5212,7 @@
   "impersonate": 0,
   "import": 0,
   "mask": 0,
-  "modified": "2026-09-25 10:18:48.785927",
+  "modified": "2026-09-29 09:34:13.565036",
   "name": "grnat2fcam",
   "parent": "Material Request",
   "permlevel": 0,
