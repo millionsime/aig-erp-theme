@@ -20,5 +20,16 @@
   "name": "AIG HR",
   "package": null,
   "restrict_to_domain": null
+ },
+ {
+  "app_name": "aig_ethiopian_calendar",
+  "custom": 0,
+  "docstatus": 0,
+  "doctype": "Module Def",
+  "modified": "2026-09-29 18:22:02.251165",
+  "module_name": "AIG Ethiopian Calendar",
+  "name": "AIG Ethiopian Calendar",
+  "package": null,
+  "restrict_to_domain": null
  }
 ]
