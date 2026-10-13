@@ -191,3 +191,7 @@ body[data-path="login"] .aig-wordmark-rule {
 body[data-path="login"] .login-error-banner {
   border-radius: 10px;
 }
+/* kidus updates Gold background for the sign-in card */
+.for-login .page-card {
+    background-color: #F4E9C9 !important;
+}
