@@ -2,6 +2,139 @@
  {
   "docstatus": 0,
   "doctype": "Workflow Action Master",
+  "modified": "2026-09-05 19:00:35.664203",
+  "name": "Approve",
+  "workflow_action_name": "Approve"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-05 19:00:35.666121",
+  "name": "Reject",
+  "workflow_action_name": "Reject"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-05 19:00:35.667022",
+  "name": "Review",
+  "workflow_action_name": "Review"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-24 15:25:21.407886",
+  "name": "Submit for Committee Review",
+  "workflow_action_name": "Submit for Committee Review"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-24 15:25:21.422129",
+  "name": "Submit for Direct Purchase",
+  "workflow_action_name": "Submit for Direct Purchase"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-24 15:25:21.423870",
+  "name": "Submit for Deputy Review",
+  "workflow_action_name": "Submit for Deputy Review"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-25 10:09:07.889380",
+  "name": "Submit Request",
+  "workflow_action_name": "Submit Request"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-25 10:09:07.896274",
+  "name": "Start Receiving",
+  "workflow_action_name": "Start Receiving"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-25 10:09:07.898085",
+  "name": "Record Inspection",
+  "workflow_action_name": "Record Inspection"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-25 10:09:07.899262",
+  "name": "Assign Bins",
+  "workflow_action_name": "Assign Bins"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-25 10:09:07.900562",
+  "name": "Assign Bins & Post",
+  "workflow_action_name": "Assign Bins & Post"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-25 10:09:07.902222",
+  "name": "Final Approve & Post",
+  "workflow_action_name": "Final Approve & Post"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-25 10:09:07.906128",
+  "name": "Post Movement",
+  "workflow_action_name": "Post Movement"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-25 10:15:31.077739",
+  "name": "Post Receipt",
+  "workflow_action_name": "Post Receipt"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-26 12:49:04.898528",
+  "name": "Submit for Endorsement",
+  "workflow_action_name": "Submit for Endorsement"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-26 12:49:04.980755",
+  "name": "Endorse",
+  "workflow_action_name": "Endorse"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-26 12:57:38.907066",
+  "name": "Finalize Committee Decision",
+  "workflow_action_name": "Finalize Committee Decision"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-26 12:57:38.950292",
+  "name": "Forward to Tender Committee",
+  "workflow_action_name": "Forward to Tender Committee"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-09-26 12:57:38.957801",
+  "name": "Finance Sign-off",
+  "workflow_action_name": "Finance Sign-off"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
   "modified": "2026-09-29 09:34:13.432215",
   "name": "Submit Purchase Request",
   "workflow_action_name": "Submit Purchase Request"
@@ -12,5 +145,19 @@
   "modified": "2026-09-29 09:34:13.441940",
   "name": "Approve & Assign",
   "workflow_action_name": "Approve & Assign"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-10-02 17:02:32.577893",
+  "name": "Approve Budget",
+  "workflow_action_name": "Approve Budget"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-10-02 17:02:32.587181",
+  "name": "Confirm Printed & Sealed",
+  "workflow_action_name": "Confirm Printed & Sealed"
  }
 ]

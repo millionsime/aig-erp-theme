@@ -5,13 +5,13 @@
   "docstatus": 0,
   "doctype": "Purchase Taxes and Charges Template",
   "is_default": 0,
-  "modified": "2026-09-25 14:56:33.006248",
+  "modified": "2026-10-06 12:41:43.398009",
   "name": "Ethiopia Tax - AIG",
   "tax_category": null,
   "taxes": [
    {
     "account_currency": "ETB",
-    "account_head": "2131 - VAT Payable 15% - AIG",
+    "account_head": "21402 - VAT Payable 15% - AIG",
     "add_deduct_tax": "Add",
     "allocate_full_amount_to_stock_items": 1,
     "base_net_amount": 0.0,

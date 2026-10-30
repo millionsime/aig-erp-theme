@@ -2,7 +2,7 @@
  {
   "accounts": [
    {
-    "account": "2133 - Withholding Tax Payable 3% - AIG",
+    "account": "21403 - Withholding Tax Payable 3% - AIG",
     "company": "Adama Investment Group"
    }
   ],
@@ -11,7 +11,7 @@
   "disable_transaction_threshold": 0,
   "docstatus": 0,
   "doctype": "Tax Withholding Category",
-  "modified": "2026-09-25 14:56:33.154142",
+  "modified": "2026-10-06 12:41:43.947381",
   "name": "AIG 3% Withholding Tax",
   "rates": [
    {
@@ -30,7 +30,7 @@
  {
   "accounts": [
    {
-    "account": "2132 - VAT Withholding Payable 7.5% - AIG",
+    "account": "21401 - VAT Withholding Payable 7.5% - AIG",
     "company": "Adama Investment Group"
    }
   ],
@@ -39,7 +39,7 @@
   "disable_transaction_threshold": 0,
   "docstatus": 0,
   "doctype": "Tax Withholding Category",
-  "modified": "2026-09-25 14:56:33.138251",
+  "modified": "2026-10-06 12:41:43.861186",
   "name": "AIG 7.5% VAT Withholding",
   "rates": [
    {

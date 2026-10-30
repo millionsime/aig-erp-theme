@@ -1889,22 +1889,6 @@
  },
  {
   "default_value": null,
-  "doc_type": "Purchase Receipt",
-  "docstatus": 0,
-  "doctype": "Property Setter",
-  "doctype_or_field": "DocField",
-  "field_name": "provisional_expense_account",
-  "is_system_generated": 1,
-  "modified": "2026-09-25 14:56:32.225203",
-  "module": null,
-  "name": "Purchase Receipt-provisional_expense_account-hidden",
-  "property": "hidden",
-  "property_type": "Check",
-  "row_name": null,
-  "value": "1"
- },
- {
-  "default_value": null,
   "doc_type": "Material Request",
   "docstatus": 0,
   "doctype": "Property Setter",
@@ -3310,5 +3294,21 @@
   "property_type": "Check",
   "row_name": null,
   "value": "0"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Purchase Receipt",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "provisional_expense_account",
+  "is_system_generated": 1,
+  "modified": "2026-10-06 12:41:42.074244",
+  "module": null,
+  "name": "Purchase Receipt-provisional_expense_account-hidden",
+  "property": "hidden",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "1"
  }
 ]

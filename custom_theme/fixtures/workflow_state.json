@@ -2,10 +2,217 @@
  {
   "docstatus": 0,
   "doctype": "Workflow State",
+  "icon": "question-sign",
+  "modified": "2026-09-05 19:00:35.646781",
+  "name": "Pending",
+  "style": "",
+  "workflow_state_name": "Pending"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "ok-sign",
+  "modified": "2026-09-05 19:00:35.648971",
+  "name": "Approved",
+  "style": "Success",
+  "workflow_state_name": "Approved"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "remove",
+  "modified": "2026-09-05 19:00:35.650033",
+  "name": "Rejected",
+  "style": "Danger",
+  "workflow_state_name": "Rejected"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-24 15:25:21.328267",
+  "name": "Pending Purchase Committee Approval",
+  "style": "",
+  "workflow_state_name": "Pending Purchase Committee Approval"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-24 15:25:21.367978",
+  "name": "Pending Enterprise Head Approval",
+  "style": "",
+  "workflow_state_name": "Pending Enterprise Head Approval"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-24 15:25:21.370997",
+  "name": "Pending Corporate Approval",
+  "style": "",
+  "workflow_state_name": "Pending Corporate Approval"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-24 15:25:21.379618",
+  "name": "Pending CEO Approval",
+  "style": "",
+  "workflow_state_name": "Pending CEO Approval"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-24 15:25:21.382036",
+  "name": "Pending Deputy Approval",
+  "style": "",
+  "workflow_state_name": "Pending Deputy Approval"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-24 15:27:03.799400",
+  "name": "Draft",
+  "style": "",
+  "workflow_state_name": "Draft"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-25 10:09:07.858701",
+  "name": "Pending Store Review",
+  "style": "",
+  "workflow_state_name": "Pending Store Review"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-25 10:09:07.870495",
+  "name": "Pending Enterprise Approval",
+  "style": "",
+  "workflow_state_name": "Pending Enterprise Approval"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-25 10:09:07.871719",
+  "name": "Pending Inspection",
+  "style": "",
+  "workflow_state_name": "Pending Inspection"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-25 10:09:07.872794",
+  "name": "Pending GSK Approval",
+  "style": "",
+  "workflow_state_name": "Pending GSK Approval"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-25 10:09:07.873976",
+  "name": "Pending Property Assignment",
+  "style": "",
+  "workflow_state_name": "Pending Property Assignment"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-25 10:09:07.874942",
+  "name": "Pending Main Store Approval",
+  "style": "",
+  "workflow_state_name": "Pending Main Store Approval"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-25 10:09:07.876052",
+  "name": "Posted",
+  "style": "",
+  "workflow_state_name": "Posted"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-25 10:15:30.843876",
+  "name": "Pending Posting",
+  "style": "",
+  "workflow_state_name": "Pending Posting"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-26 12:49:05.002506",
+  "name": "Pending Enterprise Head Endorsement",
+  "style": "",
+  "workflow_state_name": "Pending Enterprise Head Endorsement"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-26 12:49:05.050093",
+  "name": "Endorsed",
+  "style": "",
+  "workflow_state_name": "Endorsed"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-26 12:57:38.791206",
+  "name": "Pending Committee Signoff",
+  "style": "",
+  "workflow_state_name": "Pending Committee Signoff"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-09-26 12:57:38.850750",
+  "name": "Pending Finance Signoff",
+  "style": "",
+  "workflow_state_name": "Pending Finance Signoff"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
   "icon": "",
   "modified": "2026-09-29 09:34:13.416203",
   "name": "Pending Head Approval",
   "style": "Warning",
   "workflow_state_name": "Pending Head Approval"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-10-02 17:02:32.464326",
+  "name": "Pending Budget Approval",
+  "style": "",
+  "workflow_state_name": "Pending Budget Approval"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-10-02 17:02:32.565498",
+  "name": "Pending Print & Seal",
+  "style": "",
+  "workflow_state_name": "Pending Print & Seal"
  }
 ]

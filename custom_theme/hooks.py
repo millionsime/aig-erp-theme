@@ -31,17 +31,27 @@ fixtures = [
 	{"dt": "Tax Withholding Category", "filters": [["name", "like", "AIG%"]]},
 	{"dt": "Purchase Taxes and Charges Template",
 	 "filters": [["company", "=", "Adama Investment Group"]]},
+	{"dt": "Sales Taxes and Charges Template",
+	 "filters": [["company", "=", "Adama Investment Group"]]},
 	{"dt": "Module Def", "filters": [["name", "like", "AIG%"]]},
 	{"dt": "Print Format", "filters": [["name", "like", "AIG%"]]},
 	{"dt": "Workspace", "filters": [["name", "like", "AIG%"]]},
-	{"dt": "Workflow State", "filters": [["name", "in", ["Pending Head Approval"]]]},
-	{"dt": "Workflow Action Master", "filters": [["name", "in", ["Submit Purchase Request", "Approve & Assign"]]]},
+	# Workflow State / Workflow Action Master exported UNFILTERED (2026-10-06):
+	# the old explicit 1- and 2-name filters went stale as the inventory / stock-
+	# request workflows added ~20 states and ~19 actions. Same philosophy as
+	# Property Setter: re-exporting standard rows (Approve/Reject) is harmless,
+	# a missing custom state breaks the workflow on a fresh install.
+	{"dt": "Workflow State"},
+	{"dt": "Workflow Action Master"},
 ]
 # NOTE: custom DocTypes (AIG Committee Signoff, AIG Stock Migration Batch/Row)
 # cannot be exported as fixtures outside developer mode; they are created
 # idempotently by the script chain in ~/aig-erp-config/scripts (132 et al.),
 # which runs after migrate on a fresh install. The same chain also owns the
 # one non-'aig'-prefixed field (Purchase Receipt.model_42_handover_document).
+# The Custom Field 'aig%' filter also covers the AIG HR fields that carry the
+# aig prefix; hrms/erpnext-created fields (Employee.*, workflow_state, ...)
+# are re-created by their own apps on sync and are deliberately not captured.
 # Property Setter / Custom DocPerm are exported UNFILTERED on purpose: rows
 # created by hrms/erpnext syncs duplicate harmlessly on the target, while the
 # AIG rows (Company/Cost Center/Warehouse/Account/MR/PO/PR/PI/PE...) are the
