@@ -1,0 +1,34 @@
+{
+	"company": "Adama Investment Group",
+	"abbr": "AIG",
+	"_comment": "Real tree as found locally (2026-10). Enterprises without business units are valid leaf/group cost centers on their own. Employees/others rename BU entries by editing this file and re-running seed - never rename docs by hand on the site only.",
+	"root": {
+		"name": "Adama Investment Group - AIG",
+		"parent": null,
+		"is_group": 1
+	},
+	"nodes": [
+		{ "name": "Head Office - AIG", "parent": "Adama Investment Group - AIG", "is_group": 0 },
+		{ "name": "Main - AIG", "parent": "Adama Investment Group - AIG", "is_group": 0 },
+		{ "name": "Tech - AIG", "parent": "Adama Investment Group - AIG", "is_group": 0 },
+		{ "name": "Engineering - AIG", "parent": "Adama Investment Group - AIG", "is_group": 0 },
+
+		{ "name": "Construction Enterprise - AIG", "parent": "Adama Investment Group - AIG", "is_group": 1 },
+		{ "name": "Construction Projects - AIG", "parent": "Construction Enterprise - AIG", "is_group": 1 },
+		{ "name": "Construction Projects Phase 1 - AIG", "parent": "Construction Projects - AIG", "is_group": 0 },
+
+		{ "name": "Agro Enterprise - AIG", "parent": "Adama Investment Group - AIG", "is_group": 1 },
+		{ "name": "Animal Feed Factory - AIG", "parent": "Agro Enterprise - AIG", "is_group": 0 },
+		{ "name": "Dairy Farm - AIG", "parent": "Agro Enterprise - AIG", "is_group": 0 },
+		{ "name": "Poultry Farm - AIG", "parent": "Agro Enterprise - AIG", "is_group": 0 },
+		{ "name": "Slaughterhouse - AIG", "parent": "Agro Enterprise - AIG", "is_group": 0 },
+
+		{ "name": "Integrated Service Enterprise - AIG", "parent": "Adama Investment Group - AIG", "is_group": 1 },
+		{ "name": "Cafeteria and Parks - AIG", "parent": "Integrated Service Enterprise - AIG", "is_group": 0 },
+		{ "name": "City Mall - AIG", "parent": "Integrated Service Enterprise - AIG", "is_group": 0 },
+		{ "name": "Fuel Station - AIG", "parent": "Integrated Service Enterprise - AIG", "is_group": 0 },
+		{ "name": "Garage - AIG", "parent": "Integrated Service Enterprise - AIG", "is_group": 0 },
+		{ "name": "Parking - AIG", "parent": "Integrated Service Enterprise - AIG", "is_group": 0 }
+	],
+	"_next_layer": "TODO: each enterprise may carry its own subsidiary cost centers as business units grow; keep appending nodes here in dependency order."
+}

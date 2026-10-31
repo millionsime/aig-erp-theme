@@ -1,0 +1,6 @@
+user,enterprise
+# EXAMPLE ONLY - copy to a private file (never commit real user data) and run:
+#   bench --site <site> execute aig_custom_theme.setup.apply_user_permissions.run --kwargs "{'csv_path': '/tmp/user_enterprises.csv'}"
+# user,enterprise
+# buyer1@aig.example,Agro Enterprise - AIG
+# keeper1@aig.example,Integrated Service Enterprise - AIG

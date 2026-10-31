@@ -159,5 +159,26 @@
   "modified": "2026-10-02 17:02:32.587181",
   "name": "Confirm Printed & Sealed",
   "workflow_action_name": "Confirm Printed & Sealed"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-10-30 13:25:28.084914",
+  "name": "Submit Leave",
+  "workflow_action_name": "Submit Leave"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-10-30 13:25:28.104123",
+  "name": "Create Leave Application",
+  "workflow_action_name": "Create Leave Application"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-10-30 13:26:45.883282",
+  "name": "Verify",
+  "workflow_action_name": "Verify"
  }
 ]

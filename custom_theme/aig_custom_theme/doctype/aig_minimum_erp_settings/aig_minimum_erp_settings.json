@@ -1,0 +1,61 @@
+{
+ "actions": [],
+ "creation": "2026-10-06 10:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "enable_committee",
+  "column_break_1",
+  "purchase_order_threshold"
+ ],
+ "fields": [
+  {
+   "default": "1",
+   "description": "Turns the committee guard on Quality Inspection / Purchase Order / RFQ on or off.",
+   "fieldname": "enable_committee",
+   "fieldtype": "Check",
+   "label": "Enable Committee Guard"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "5000000",
+   "description": "Above this amount (base), Purchase Orders / RFQs should carry assigned committee members; members record their decision on the document itself.",
+   "fieldname": "purchase_order_threshold",
+   "fieldtype": "Currency",
+   "label": "Purchase Committee Threshold (ETB)",
+   "options": "ETB"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "module": "AIG Custom Theme",
+ "name": "AIG Minimum ERP Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "AIG Finance",
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

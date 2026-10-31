@@ -1,0 +1,22 @@
+{
+  "holiday_lists": [
+    {
+      "name": "AIG Holidays 2019 EC (Sept 2026 - Sept 2027)",
+      "company": "Adama Investment Group",
+      "from_date": "2026-09-11",
+      "to_date": "2027-09-10",
+      "holidays": [
+        {"date": "2026-09-11", "description": "Enkutatash - Ethiopian New Year (Meskerem 1, 2019 EC)"},
+        {"date": "2026-09-27", "description": "Meskel - Finding of the True Cross"},
+        {"date": "2026-12-25", "description": "Gena - Ethiopian Christmas (Tahsas 29)"},
+        {"date": "2027-01-19", "description": "Timket - Ethiopian Epiphany"},
+        {"date": "2027-03-02", "description": "Victory of Adwa"},
+        {"date": "2027-03-10", "description": "Eid al-Fitr (approx - confirm when announced)"},
+        {"date": "2027-04-06", "description": "Ethiopian Patriots Victory Day"},
+        {"date": "2027-05-01", "description": "International Labour Day"},
+        {"date": "2027-05-05", "description": "Ethiopian Patriots and Patriots Resistance Day"},
+        {"date": "2027-05-17", "description": "Eid al-Adha (approx - confirm when announced)"}
+      ]
+    }
+  ]
+}

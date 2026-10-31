@@ -1,0 +1,34 @@
+{
+	"company": "Adama Investment Group",
+	"abbr": "AIG",
+	"_comment": "Warehouse tree with ownership model. type: mixed = shared company warehouse; isolated = enterprise-only, enforced at runtime by User Permissions via aig_custom_theme.setup.apply_user_permissions. enterprise links an isolated warehouse to its Cost Center tree node.",
+	"root": {
+		"name": "All Warehouses - AIG",
+		"parent": null,
+		"is_group": 1,
+		"type": "mixed"
+	},
+	"nodes": [
+		{ "name": "AIG Stores - AIG", "parent": "All Warehouses - AIG", "is_group": 1, "type": "mixed", "enterprise": null },
+
+		{ "name": "Main Store - AIG", "parent": "AIG Stores - AIG", "is_group": 0, "type": "mixed", "enterprise": null },
+		{ "name": "Open Store - AIG", "parent": "AIG Stores - AIG", "is_group": 0, "type": "mixed", "enterprise": null },
+		{ "name": "Process Store - AIG", "parent": "AIG Stores - AIG", "is_group": 0, "type": "mixed", "enterprise": null },
+		{ "name": "Project Store - AIG", "parent": "AIG Stores - AIG", "is_group": 0, "type": "isolated", "enterprise": "Construction Enterprise - AIG" },
+		{ "name": "Andode Store - AIG", "parent": "AIG Stores - AIG", "is_group": 0, "type": "isolated", "enterprise": "Agro Enterprise - AIG" },
+		{ "name": "Qera Abota Store - AIG", "parent": "AIG Stores - AIG", "is_group": 0, "type": "isolated", "enterprise": "Agro Enterprise - AIG" },
+		{ "name": "Animal Feed Plant - AIG", "parent": "AIG Stores - AIG", "is_group": 0, "type": "isolated", "enterprise": "Agro Enterprise - AIG" },
+		{ "name": "Dairy Farm Store - AIG", "parent": "AIG Stores - AIG", "is_group": 0, "type": "isolated", "enterprise": "Agro Enterprise - AIG" },
+		{ "name": "Poultry Farm Store - AIG", "parent": "AIG Stores - AIG", "is_group": 0, "type": "isolated", "enterprise": "Agro Enterprise - AIG" },
+		{ "name": "Fuel Store - AIG", "parent": "AIG Stores - AIG", "is_group": 0, "type": "isolated", "enterprise": "Integrated Service Enterprise - AIG" },
+		{ "name": "Garage Store - AIG", "parent": "AIG Stores - AIG", "is_group": 0, "type": "isolated", "enterprise": "Integrated Service Enterprise - AIG" },
+		{ "name": "Cafe Store - AIG", "parent": "AIG Stores - AIG", "is_group": 0, "type": "isolated", "enterprise": "Integrated Service Enterprise - AIG" },
+		{ "name": "Parks Store - AIG", "parent": "AIG Stores - AIG", "is_group": 0, "type": "isolated", "enterprise": "Integrated Service Enterprise - AIG" },
+
+		{ "name": "Finished Goods - AIG", "parent": "All Warehouses - AIG", "is_group": 0, "type": "mixed", "enterprise": null },
+		{ "name": "Goods In Transit - AIG", "parent": "All Warehouses - AIG", "is_group": 0, "type": "mixed", "enterprise": null },
+		{ "name": "Work In Progress - AIG", "parent": "All Warehouses - AIG", "is_group": 0, "type": "mixed", "enterprise": null },
+		{ "name": "Stores - AIG", "parent": "All Warehouses - AIG", "is_group": 0, "type": "mixed", "enterprise": null }
+	],
+	"_next_layer": "Add X/Y/Z-style new warehouses here with type: isolated and the owning enterprise; re-run the seed to create them."
+}

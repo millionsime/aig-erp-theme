@@ -1,0 +1,48 @@
+{
+	"_comment": "Requested role names map onto the AIG-prefixed role set already shipped via the [Role like 'AIG%'] fixture filter. Values marked NEW are created by the seed. 'Not a role' entries are excluded by design: Procurement Committee / QA Committee members are assigned per transaction (committee custom fields), not via roles.",
+	"map": {
+		"CEO": "AIG CEO",
+		"Chief Corporate": "AIG Corporate",
+		"Enterprise Head": "AIG Enterprise Head",
+		"Team Leader": "AIG Team Leader",
+		"Finance Head": "AIG Finance Head",
+		"Chief Accountant": "AIG Chief Accountant",
+		"Accountant": "AIG Accountant",
+		"Procurement and Property Admin Head": "AIG Procurement Director",
+		"Purchaser": "AIG Procurement Officer",
+		"Store Manager": "AIG Store Manager",
+		"Store Expert": "AIG Store Expert",
+		"Store Keeper": "AIG Store Keeper",
+		"HR Director": "AIG HR Director",
+		"HR Expert": "AIG HR Expert",
+		"Procurement Developer": "AIG Procurement Developer",
+		"HR Developer": "AIG HR Developer",
+		"Inventory Developer": "AIG Inventory Developer",
+		"Asset Developer": "AIG Asset Developer"
+	},
+	"seed_creates": [
+		"AIG Team Leader",
+		"AIG Store Manager",
+		"AIG Store Expert",
+		"AIG Accountant",
+		"AIG Chief Accountant",
+		"AIG Finance Head",
+		"AIG HR Director",
+		"AIG Procurement Developer",
+		"AIG HR Developer",
+		"AIG Inventory Developer",
+		"AIG Asset Developer"
+	],
+	"existing_aig_roles": [
+		"AIG CEO", "AIG Corporate", "AIG Deputy", "AIG End User",
+		"AIG Enterprise Head", "AIG Evaluation Committee", "AIG Finance",
+		"AIG General Store Keeper", "AIG HR Expert", "AIG HR Manager",
+		"AIG Internal Auditor", "AIG Inventory Administrator",
+		"AIG Main Store Administrator", "AIG Plan and Budget",
+		"AIG Procurement Director", "AIG Procurement Officer",
+		"AIG Property Admin Expert", "AIG Purchase Committee",
+		"AIG Record Office", "AIG Store Keeper"
+	],
+	"not_roles": ["Procurement Committee", "QA Committee"],
+	"_todo_next_layer": "TODO(next layer): sales-vs-payroll accountant split (role profiles / permission query conditions)."
+}

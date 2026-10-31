@@ -1,9 +1,46 @@
 app_name = "custom_theme"
 app_title = "AIG Custom Theme"
 app_publisher = "aig-tech"
-app_description = "AIG theme logo coor"
+app_description = "AIG theme + foundation layer (seed, org hooks, guardrails)"
 app_email = "simemillion@gmail.com"
 app_license = "mit"
+
+# ------------------------------------------------------------------ roles
+# The AIG-prefixed role set (mapping in aig_custom_theme/setup/data/role_map.json).
+# Used to filter Custom DocPerm fixtures so we ship only permissions we own.
+AIG_ROLES = [
+	"AIG Accountant",
+	"AIG Asset Developer",
+	"AIG Chief Accountant",
+	"AIG CEO",
+	"AIG Corporate",
+	"AIG Deputy",
+	"AIG End User",
+	"AIG Enterprise Head",
+	"AIG Evaluation Committee",
+	"AIG Finance",
+	"AIG Finance Head",
+	"AIG General Store Keeper",
+	"AIG HR Director",
+	"AIG HR Expert",
+	"AIG HR Manager",
+	"AIG HR Developer",
+	"AIG Inventory Administrator",
+	"AIG Inventory Developer",
+	"AIG Internal Auditor",
+	"AIG Main Store Administrator",
+	"AIG Plan and Budget",
+	"AIG Procurement Director",
+	"AIG Procurement Developer",
+	"AIG Procurement Officer",
+	"AIG Property Admin Expert",
+	"AIG Purchase Committee",
+	"AIG Record Office",
+	"AIG Store Expert",
+	"AIG Store Keeper",
+	"AIG Store Manager",
+	"AIG Team Leader",
+]
 
 app_include_css = "/assets/custom_theme/css/custom_theme.css?v=2"
 app_include_js = "/assets/custom_theme/js/aig_desk.js?v=2"
@@ -20,29 +57,38 @@ web_include_js = "/assets/custom_theme/js/aig_login.js?v=4"
 # for HOW these records were built; the fixtures capture the resulting state
 # for reproducible installs.
 fixtures = [
+	# Custom DocPerm filtered to the AIG role set (2026-10-06): we only ship
+	# permissions bound to roles we own; desktop/standard roles keep their own
+	# erpnext/ hrms-defined rows.
+	{"dt": "Custom DocPerm", "filters": [["role", "in", AIG_ROLES]]},
 	{"dt": "Custom Field", "filters": [["fieldname", "like", "aig%"]]},
 	{"dt": "Property Setter"},
-	{"dt": "Custom DocPerm"},
 	{"dt": "Server Script"},
 	{"dt": "Client Script"},
-	{"dt": "Workflow"},
+	# Workflow moves below: it imports AFTER its Workflow State / Action rows.
 	{"dt": "Role", "filters": [["name", "like", "AIG%"]]},
-	{"dt": "User Permission"},
-	{"dt": "Tax Withholding Category", "filters": [["name", "like", "AIG%"]]},
-	{"dt": "Purchase Taxes and Charges Template",
-	 "filters": [["company", "=", "Adama Investment Group"]]},
-	{"dt": "Sales Taxes and Charges Template",
-	 "filters": [["company", "=", "Adama Investment Group"]]},
+	# Leave Types we own (the 3 the foundation layer ships): Annual + Maternity
+	# are foundation-owned; Sick keeps its AIG row so no MIS STAT uses it.
+	{"dt": "Leave Type", "filters": [["name", "in", ["Annual", "Sick", "Maternity"]]]},
+	# NOTE: User Permission is per-user data (docs section 3.4) and is
+	# deliberately NOT a fixture anymore. Use the helper instead:
+	#   bench --site <site> execute aig_custom_theme.setup.apply_user_permissions.run
+	# CoA-2.0-linked records are NOT fixtures (2026-10-31): the AIG tax templates
+	# and the two AIG Tax Withholding Categories hardwire CoA account names
+	# (21402 VAT 15%, 21401 VAT-WH 7.5%, 21403 WHT 3%) that only exist AFTER the
+	# AIG CoA importer chain runs (aig-erp-config scripts 80-86). Importing them
+	# before that aborts every fresh install with a LinkValidationError. They are
+	# rebuilt by:  bench --site <site> execute aig_custom_theme.setup.ensure_tax_setup.run
 	{"dt": "Module Def", "filters": [["name", "like", "AIG%"]]},
 	{"dt": "Print Format", "filters": [["name", "like", "AIG%"]]},
 	{"dt": "Workspace", "filters": [["name", "like", "AIG%"]]},
-	# Workflow State / Workflow Action Master exported UNFILTERED (2026-10-06):
-	# the old explicit 1- and 2-name filters went stale as the inventory / stock-
-	# request workflows added ~20 states and ~19 actions. Same philosophy as
-	# Property Setter: re-exporting standard rows (Approve/Reject) is harmless,
-	# a missing custom state breaks the workflow on a fresh install.
+	# Workflow fixture chain (2026-10-31): a Workflow validates its states and
+	# actions via Link, so own rows MUST import before the Workflow docs. On a
+	# fresh install this order is fatal, on frontend it silently skipped all
+	# workflow fixtures for years. Workflow itself last.
 	{"dt": "Workflow State"},
 	{"dt": "Workflow Action Master"},
+	{"dt": "Workflow"},
 ]
 # NOTE: custom DocTypes (AIG Committee Signoff, AIG Stock Migration Batch/Row)
 # cannot be exported as fixtures outside developer mode; they are created
@@ -137,8 +183,10 @@ fixtures = [
 # Installation
 # ------------
 
-# before_install = "custom_theme.install.before_install"
-# after_install = "custom_theme.install.after_install"
+# after_install seed: on a FRESH site install-app, this seeds company, fiscal
+# years, cost centers, warehouses, departments, designations, roles and the
+# settings single from aig_custom_theme/setup/data/*.json. Safe to re-run.
+after_install = "custom_theme.aig_custom_theme.setup.seed.run_all"
 
 # Uninstallation
 # ------------
@@ -184,25 +232,51 @@ fixtures = [
 # -----------
 # Permissions evaluated in scripted ways
 
-# permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
-# }
-#
-# has_permission = {
-# 	"Event": "frappe.desk.doctype.event.event.has_permission",
-# }
+# Developer guardrails (section 2.10 of the foundation design): each AIG *
+# Developer role sees only builder records targeting its own module's
+# doctypes. Core doctypes (Company, Account, Cost Center, User, Role,
+# DocPerm, Fiscal Year...) have no permissions for these roles at all.
+w = "custom_theme.aig_custom_theme.guardrails.dev_roles"
+permission_query_conditions = {
+	"Client Script": f"{w}.permission_query_conditions",
+	"Server Script": f"{w}.permission_query_conditions",
+	"Workflow": f"{w}.permission_query_conditions",
+	"Custom Field": f"{w}.permission_query_conditions",
+	"Property Setter": f"{w}.permission_query_conditions",
+}
+has_permission = {
+	"Client Script": f"{w}.has_permission",
+	"Server Script": f"{w}.has_permission",
+	"Workflow": f"{w}.has_permission",
+	"Custom Field": f"{w}.has_permission",
+	"Property Setter": f"{w}.has_permission",
+}
 
 # Document Events
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+# AIG foundation hooks (app code, never DB Server Scripts -- see docs): 
+#  - Employee validate: derive Leave Approver from Reports To (closest boss)
+#  - Leave Application validate: no self-approval + closest-boss-only guard
+#  - Quality Inspection / Purchase Order / RFQ validate: committee guard
+doc_events = {
+	"Employee": {
+		"validate": "custom_theme.aig_custom_theme.org.leave_approver.set_leave_approver",
+	},
+	"Leave Application": {
+		"validate": "custom_theme.aig_custom_theme.org.workflow_guard.validate",
+	},
+	"Quality Inspection": {
+		"validate": "custom_theme.aig_custom_theme.committee.guard.validate",
+},
+	"Purchase Order": {
+		"validate": "custom_theme.aig_custom_theme.committee.guard.validate",
+},
+	"Request for Quotation": {
+		"validate": "custom_theme.aig_custom_theme.committee.guard.validate",
+},
+}
 
 # Scheduled Tasks
 # ---------------

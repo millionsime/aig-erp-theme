@@ -1,0 +1,22 @@
+{
+	"company": "Adama Investment Group",
+	"abbr": "AIG",
+	"_comment": "Departments exist sparingly by real usage; do not invent one per enterprise. Department is reporting-only.",
+	"all_departments": "All Departments",
+	"departments": [
+		"Accounts",
+		"Customer Service",
+		"Dispatch",
+		"Human Resources",
+		"Legal",
+		"Management",
+		"Marketing",
+		"Operations",
+		"Production",
+		"Purchase",
+		"Quality Management",
+		"Research & Development",
+		"Sales"
+	],
+	"parent_department": "All Departments"
+}

@@ -1,0 +1,11 @@
+{
+	"_comment": "Company seed — minimal, idempotent. CoA is NOT seeded: the local site carries the custom AIG v2 CoA (imported via the aig-erp-config scripts 80-86); a fresh site gets ERPNext's standard chart, which the CoA import chain can replace later.",
+	"company_name": "Adama Investment Group",
+	"abbr": "AIG",
+	"country": "Ethiopia",
+	"domain": "General",
+	"default_currency": "ETB",
+	"tax_id": "4222222222222",
+	"allow_multi_currency_invoices": 0,
+	"_note_multi_currency": "Single legal entity, ETB only: we do not enable other currencies; the Company-level convenience flag is kept off."
+}

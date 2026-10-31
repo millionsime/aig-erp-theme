@@ -214,5 +214,32 @@
   "name": "Pending Print & Seal",
   "style": "",
   "workflow_state_name": "Pending Print & Seal"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-10-30 13:25:28.108500",
+  "name": "Pending Closest Boss",
+  "style": "",
+  "workflow_state_name": "Pending Closest Boss"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-10-30 13:25:28.128204",
+  "name": "Pending HR Expert",
+  "style": "",
+  "workflow_state_name": "Pending HR Expert"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-10-30 13:25:28.134787",
+  "name": "Pending HR Director",
+  "style": "",
+  "workflow_state_name": "Pending HR Director"
  }
 ]

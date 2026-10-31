@@ -1,0 +1,15 @@
+{
+	"fiscal_years": [
+		{
+			"name": "FY 2018 EC (Jul 2025 - Jul 2026)",
+			"year_start_date": "2025-07-08",
+			"year_end_date": "2026-07-07"
+		},
+		{
+			"name": "FY 2019 EC (Jul 2026 - Jul 2027)",
+			"year_start_date": "2026-07-08",
+			"year_end_date": "2027-07-07"
+		}
+	],
+	"_comment": "Fiscal years follow the Ethiopian year: Hamle 1 (Jul 8) to Sene 30 (Jul 7). The Jan-Dec '2019 EC' calendar-year row in the live DB is a local straggler and is deliberately NOT seeded; ask before deleting it."
+}
