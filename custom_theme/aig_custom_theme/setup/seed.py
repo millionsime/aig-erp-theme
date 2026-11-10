@@ -269,7 +269,9 @@ def seed_holiday_lists():
             continue
         doc = frappe.new_doc("Holiday List")
         doc.holiday_list_name = hl["name"]
-        doc.is_default = 1
+        # Only one list may be the site default; the data file decides which.
+        doc.is_default = 1 if hl.get("is_default") else 0
+        doc.weekly_off = hl.get("weekly_off")
         doc.company = hl["company"]
         doc.from_date = getdate(hl["from_date"])
         doc.to_date = getdate(hl["to_date"])
@@ -282,6 +284,17 @@ def seed_holiday_lists():
         doc.insert(ignore_permissions=True)
         log(f"  holiday list created: {hl['name']} ({len(hl['holidays'])} holidays)")
         n += 1
+    # Existing lists keep their old rows (never rewritten), but the weekly off is
+    # reconciled: without it a leave crossing two lists counts Sundays on one
+    # side of the boundary and not the other.
+    for hl in lists:
+        current = frappe.db.get_value("Holiday List", hl["name"], "weekly_off")
+        if hl.get("weekly_off") and current != hl["weekly_off"]:
+            frappe.db.set_value(
+                "Holiday List", hl["name"], "weekly_off", hl["weekly_off"], update_modified=False
+            )
+            log(f"  holiday list weekly off set: {hl['name']} -> {hl['weekly_off']}")
+
     # hrms v16 resolves holidays through Holiday List Assignment (docstatus 1)
     # assigned to the employee OR the company; the plain company default field
     # is not consulted. Seed one company-wide assignment per list.
