@@ -1,0 +1,63 @@
+{
+  "_comment": "AIG unit set. 'conversions' are UOM Conversion Factor rows (1 <name> = factor <to>).",
+  "uoms": [
+    {
+      "name": "Nos",
+      "category": "Quantity"
+    },
+    {
+      "name": "Kg",
+      "category": "Mass"
+    },
+    {
+      "name": "Quintal",
+      "conversions": [
+        {
+          "to": "Kg",
+          "factor": 100
+        }
+      ],
+      "category": "Mass"
+    },
+    {
+      "name": "Ton",
+      "conversions": [
+        {
+          "to": "Kg",
+          "factor": 1000
+        }
+      ],
+      "category": "Mass"
+    },
+    {
+      "name": "Litre",
+      "category": "Volume"
+    },
+    {
+      "name": "Meter",
+      "category": "Length"
+    },
+    {
+      "name": "Box",
+      "category": "Quantity"
+    },
+    {
+      "name": "Pack",
+      "category": "Quantity"
+    },
+    {
+      "name": "Set",
+      "category": "Quantity"
+    },
+    {
+      "name": "Roll",
+      "category": "Quantity"
+    }
+  ],
+  "categories": [
+    "Quantity",
+    "Mass",
+    "Volume",
+    "Length"
+  ]
+}

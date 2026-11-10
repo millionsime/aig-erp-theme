@@ -1,0 +1,4 @@
+{
+  "_comment": "Warehouse types used by the AIG store hierarchy.",
+  "types": ["Store", "Transit", "Scrap", "Receiving"]
+}

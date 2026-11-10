@@ -1,0 +1,7 @@
+{
+  "_comment": "Baseline price lists. AIG buys in ETB and sells in ETB.",
+  "price_lists": [
+    {"name": "AIG Buying", "buying": 1, "selling": 0, "currency": "ETB"},
+    {"name": "AIG Selling", "buying": 0, "selling": 1, "currency": "ETB"}
+  ]
+}

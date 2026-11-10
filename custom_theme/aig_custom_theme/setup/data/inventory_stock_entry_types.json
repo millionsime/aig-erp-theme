@@ -1,0 +1,12 @@
+{
+  "_comment": "ERPNext ships none of these on this site; stocked for a self-contained install.",
+  "types": [
+    {"name": "Material Issue", "purpose": "Material Issue"},
+    {"name": "Material Receipt", "purpose": "Material Receipt"},
+    {"name": "Material Transfer", "purpose": "Material Transfer"},
+    {"name": "Material Transfer for Manufacture", "purpose": "Material Transfer for Manufacture"},
+    {"name": "Manufacture", "purpose": "Manufacture"},
+    {"name": "Repack", "purpose": "Repack"},
+    {"name": "Send to Subcontractor", "purpose": "Send to Subcontractor"}
+  ]
+}

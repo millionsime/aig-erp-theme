@@ -1,0 +1,14 @@
+{
+  "_comment": "Editable item-group tree. Flags are applied to NEW items of the group by a default-fill hook (aig_custom_theme.inventory.item_defaults).",
+  "root": "All Item Groups",
+  "groups": [
+    {"name": "Consumables", "parent": "All Item Groups"},
+    {"name": "Office Supplies", "parent": "All Item Groups"},
+    {"name": "Spare Parts", "parent": "All Item Groups"},
+    {"name": "Fixed Asset Items", "parent": "All Item Groups", "is_fixed_asset": 1},
+    {"name": "Agro Inputs", "parent": "All Item Groups"},
+    {"name": "Construction Materials", "parent": "All Item Groups"},
+    {"name": "Services", "parent": "All Item Groups", "is_stock_item": 0},
+    {"name": "Fuel", "parent": "Consumables", "has_batch_no": 0}
+  ]
+}

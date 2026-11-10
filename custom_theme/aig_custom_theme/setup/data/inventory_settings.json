@@ -1,0 +1,23 @@
+{
+  "_comment": "Stock Settings values applied by aig_0002_inventory_seed. auto_indent stays 0: reorder alerts are notifications, never automatic Material Requests.",
+  "stock_settings": {
+    "item_naming_by": "Item Code",
+    "valuation_method": "FIFO",
+    "allow_negative_stock": 0,
+    "auto_insert_price_list_rate_if_missing": 1,
+    "auto_indent": 0,
+    "reorder_email_notify": 0,
+    "stock_frozen_upto_days": 0,
+    "enable_serial_and_batch_no_for_item": 0,
+    "use_serial_batch_fields": 1,
+    "validate_material_transfer_warehouses": 0
+  },
+  "reorder_alert_enabled": 1,
+  "reorder_alert_recipient_roles": [
+    "AIG Store Expert",
+    "AIG Store Manager"
+  ],
+  "stock_count_reminder_enabled": 1,
+  "stock_count_reminder_day_of_month": 1,
+  "block_cross_enterprise_transfer": 1
+}
