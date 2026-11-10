@@ -388,3 +388,26 @@ doc_events = {
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
 
+# ------------------------------------------------------------------ inventory
+# Added by the inventory layer (2026-11-10). Written as an update() so the
+# foundation's doc_events block above stays untouched and readable.
+_INV = "custom_theme.aig_custom_theme.inventory.guards"
+doc_events.update(
+	{
+		"Item": {"validate": f"{_INV}.apply_item_group_defaults"},
+		"Stock Entry": {
+			"before_validate": f"{_INV}.classify_stock_entry",
+			"before_submit": f"{_INV}.validate_store_manager_approval",
+		},
+		"Stock Reconciliation": {
+			"before_submit": f"{_INV}.require_store_manager_for_reconciliation",
+		},
+	}
+)
+
+# Reorder alerts (daily) and the monthly stock-count reminder. Both no-op when
+# their switch in AIG Minimum ERP Settings is off.
+scheduler_events = {
+	"daily": [f"{_INV}.daily_reorder_alerts"],
+	"monthly": [f"{_INV}.monthly_stock_count_reminder"],
+}

@@ -8,7 +8,18 @@
  "field_order": [
   "enable_committee",
   "column_break_1",
-  "purchase_order_threshold"
+  "purchase_order_threshold",
+  "inventory_section",
+  "enable_isolated_issue_gate",
+  "enable_transfer_approval",
+  "block_cross_enterprise_transfer",
+  "column_break_inventory",
+  "enable_reorder_alerts",
+  "reorder_alert_recipient_roles",
+  "enable_stock_count_reminder",
+  "stock_count_reminder_day",
+  "column_break_workflow",
+  "enable_closest_boss_guard"
  ],
  "fields": [
   {
@@ -29,12 +40,81 @@
    "fieldtype": "Currency",
    "label": "Purchase Committee Threshold (ETB)",
    "options": "ETB"
+  },
+  {
+   "fieldname": "inventory_section",
+   "fieldtype": "Section Break",
+   "label": "Inventory gates"
+  },
+  {
+   "default": "1",
+   "description": "A Material Issue (or a transfer for manufacture) out of an isolated enterprise store needs a Store Manager approval before it can be posted.",
+   "fieldname": "enable_isolated_issue_gate",
+   "fieldtype": "Check",
+   "label": "Require Store Manager approval for isolated-store issues"
+  },
+  {
+   "default": "1",
+   "description": "Every Material Transfer needs a Store Manager approval before posting.",
+   "fieldname": "enable_transfer_approval",
+   "fieldtype": "Check",
+   "label": "Require Store Manager approval for transfers"
+  },
+  {
+   "default": "1",
+   "description": "Block a transfer between two different enterprises' isolated stores. A transfer into a mixed store stays allowed.",
+   "fieldname": "block_cross_enterprise_transfer",
+   "fieldtype": "Check",
+   "label": "Block cross-enterprise isolated transfers"
+  },
+  {
+   "fieldname": "column_break_inventory",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "description": "Daily job: notify the roles below for each item/warehouse at or below its reorder level. Never creates Material Requests.",
+   "fieldname": "enable_reorder_alerts",
+   "fieldtype": "Check",
+   "label": "Enable reorder alerts"
+  },
+  {
+   "default": "AIG Store Expert,AIG Store Manager",
+   "description": "Comma-separated AIG roles that receive the daily reorder alert.",
+   "fieldname": "reorder_alert_recipient_roles",
+   "fieldtype": "Data",
+   "label": "Reorder alert recipients (roles)"
+  },
+  {
+   "default": "1",
+   "description": "Monthly reminder to Store Manager, per warehouse, to run a stock count.",
+   "fieldname": "enable_stock_count_reminder",
+   "fieldtype": "Check",
+   "label": "Enable monthly stock count reminder"
+  },
+  {
+   "default": "1",
+   "description": "Day of month for the stock count reminder (1-28).",
+   "fieldname": "stock_count_reminder_day",
+   "fieldtype": "Int",
+   "label": "Stock count reminder day"
+  },
+  {
+   "fieldname": "column_break_workflow",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "description": "Extra check on the existing 'Pending Enterprise Approval' transition: the approver must be the requester's closest boss (Employee Reports To) or hold the enterprise approval role. Switch off to fall back to role-only approval.",
+   "fieldname": "enable_closest_boss_guard",
+   "fieldtype": "Check",
+   "label": "Enforce closest-boss approval on stock requests"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-11-10 12:00:00.000000",
+ "modified": "2026-11-10 13:30:00.000000",
  "module": "AIG Custom Theme",
  "name": "AIG Minimum ERP Settings",
  "owner": "Administrator",
@@ -58,6 +138,5 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+ "states": []
 }

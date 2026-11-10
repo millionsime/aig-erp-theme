@@ -299,6 +299,83 @@ def seed_price_lists():
 	log(f"  price lists: {n} created")
 
 
+
+
+MODULE_DEF = "AIG Custom Theme"
+
+
+def ensure_module_def():
+	"""The app's own Module Def is absent on this site (the shipped fixture only
+	carries frappe's modules), and a DocType cannot be created without it."""
+	if not frappe.db.exists("Module Def", MODULE_DEF):
+		frappe.get_doc(
+			{"doctype": "Module Def", "module_name": MODULE_DEF, "app_name": "custom_theme"}
+		).insert(ignore_permissions=True)
+		log(f"  module def created: {MODULE_DEF}")
+		frappe.clear_cache()
+	# frappe.local.module_app is a per-request dict built at boot from Module
+	# Def; doctype inserts resolve the module through it, so register the module
+	# for this process too -- otherwise DocType.on_update raises
+	# "Module AIG Custom Theme not found" even though the row exists.
+	frappe.local.module_app[frappe.scrub(MODULE_DEF)] = "custom_theme"
+
+
+def ensure_settings_doctype():
+	"""Create or refresh AIG Minimum ERP Settings from its app JSON.
+
+	Model sync does not pick this DocType up (its module folder is skipped), so
+	the seed owns it: insert when the row is missing, refresh the field list when
+	the JSON carries a newer `modified`. Values already stored in the Single are
+	left alone.
+	"""
+	path = frappe.get_app_path(
+		"custom_theme",
+		"aig_custom_theme",
+		"doctype",
+		"aig_minimum_erp_settings",
+		"aig_minimum_erp_settings.json",
+	)
+	with open(path, encoding="utf-8") as f:
+		spec = json.load(f)
+
+	name = spec["name"]
+	stored = frappe.db.get_value("DocType", name, "modified")
+	# in_patch: Frappe only allows creating a *standard* (non-custom) DocType
+	# outside developer mode while in a patch/test context. Production keeps
+	# developer_mode off, so the seed borrows the patch flag for this step.
+	had_flag = frappe.flags.in_patch
+	frappe.flags.in_patch = True
+	try:
+		if not stored:
+			doc = frappe.get_doc(spec)
+			doc.flags.ignore_permissions = True
+			# The Module Def for this app was only just created; link checks on
+			# this one insert would otherwise reject it from a stale registry.
+			frappe.flags.ignore_links = True
+			try:
+				doc.insert()
+			finally:
+				frappe.flags.ignore_links = False
+			log(f"  settings doctype created: {name}")
+			return
+
+		if str(stored) >= str(spec.get("modified") or ""):
+			log("  settings doctype: up to date")
+			return
+
+		doc = frappe.get_doc("DocType", name)
+		doc.set("fields", [])
+		for field in spec["fields"]:
+			doc.append("fields", field)
+		doc.field_order = spec.get("field_order")
+		doc.permissions = [p for p in doc.permissions]
+		doc.flags.ignore_permissions = True
+		doc.save()
+		log(f"  settings doctype refreshed: {name} ({len(spec['fields'])} fields)")
+	finally:
+		frappe.flags.in_patch = had_flag
+
+
 def apply_stock_settings():
 	data = _load("inventory_settings.json")["stock_settings"]
 	doc = frappe.get_single("Stock Settings")
@@ -345,6 +422,40 @@ def adopt_adjustment_account():
 	log(f"  adjustment account adopted: {candidate}")
 
 
+
+# Gates that must default ON even on a site where the Single has never been
+# saved: an unset Check reads back as 0, which would silently disable a control.
+SETTING_DEFAULTS = {
+	"enable_isolated_issue_gate": 1,
+	"enable_transfer_approval": 1,
+	"block_cross_enterprise_transfer": 1,
+	"enable_reorder_alerts": 1,
+	"reorder_alert_recipient_roles": "AIG Store Expert,AIG Store Manager",
+	"enable_stock_count_reminder": 1,
+	"stock_count_reminder_day": 1,
+	"enable_closest_boss_guard": 1,
+}
+
+
+def apply_settings_defaults():
+	"""Write the gate defaults only where the field has never been stored, so an
+	operator's explicit 0 is never overwritten by a re-seed."""
+	written = []
+	for field, default in SETTING_DEFAULTS.items():
+		stored = frappe.db.sql(
+			"select value from tabSingles where doctype=%s and field=%s",
+			("AIG Minimum ERP Settings", field),
+		)
+		if stored:
+			continue
+		frappe.db.set_single_value("AIG Minimum ERP Settings", field, default)
+		written.append(field)
+	if written:
+		log(f"  inventory settings defaulted: {', '.join(written)}")
+	else:
+		log("  inventory settings: already stored")
+
+
 def run_all(report_only=False):
 	# in_patch / in_install: migrate and after_install run without a user context.
 	if not (frappe.flags.in_patch or frappe.flags.in_install):
@@ -356,6 +467,8 @@ def run_all(report_only=False):
 		)
 		return
 	log("=== AIG inventory seed ===")
+	ensure_module_def()
+	ensure_settings_doctype()
 	ensure_custom_fields()
 	seed_warehouse_types()
 	seed_uom_categories()
@@ -364,6 +477,7 @@ def run_all(report_only=False):
 	seed_stock_entry_types()
 	seed_price_lists()
 	apply_stock_settings()
+	apply_settings_defaults()
 	adopt_adjustment_account()
 	log("=== inventory seed complete (idempotent) ===")
 
