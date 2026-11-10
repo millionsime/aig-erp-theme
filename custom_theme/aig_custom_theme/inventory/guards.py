@@ -235,6 +235,87 @@ def require_store_manager_for_reconciliation(doc, method=None):
 	)
 
 
+
+# ---------------------------------------------------------------- closest boss
+# States whose *exit* is an approval decision on a Material Request.
+CLOSEST_BOSS_STATES = ("Pending Store Review", "Pending Enterprise Approval")
+
+
+def _employee_for_user(user):
+	return frappe.db.get_value("Employee", {"user_id": user}, "name")
+
+
+def closest_boss_user(requester_user):
+	"""Walk Employee.reports_to upwards and return the first user found.
+
+	Returns None when the requester has no employee record, no boss above them,
+	or a chain in which no employee has a user account -- the caller decides
+	whether that is a block or a warning.
+	"""
+	employee = _employee_for_user(requester_user)
+	seen = set()
+	while employee and employee not in seen:
+		seen.add(employee)
+		row = frappe.db.get_value("Employee", employee, ["reports_to", "user_id"], as_dict=True)
+		if not row:
+			return None
+		if row.user_id and row.user_id != requester_user:
+			return row.user_id
+		employee = row.reports_to
+	return None
+
+
+def enforce_closest_boss(doc, method=None):
+	"""Additive check on the EXISTING Material Request approvals.
+
+	The workflow still decides *which role* may act (AIG Main Store
+	Administrator, AIG Enterprise Head). This only adds: whoever acts must also
+	be the requester's closest boss. It never replaces the role rules, and it
+	steps aside when the requester has no boss on record (logged, not blocked).
+	"""
+	if not cint(_setting("enable_closest_boss_guard", 1)):
+		return
+	if doc.is_new():
+		return
+
+	before = doc.get_doc_before_save()
+	if not before or before.get("workflow_state") == doc.get("workflow_state"):
+		return
+	if before.get("workflow_state") not in CLOSEST_BOSS_STATES:
+		return
+
+	user = frappe.session.user
+	requester = doc.get("aig_requested_by") or doc.get("owner")
+
+	if user == requester:
+		frappe.throw(
+			_("AIG: a requester cannot approve their own stock request."),
+			frappe.PermissionError,
+		)
+
+	# Administrator / System Manager act on behalf of the organisation; the
+	# audit trail records them and the existing MR Approval Guard still holds.
+	if user == "Administrator" or "System Manager" in frappe.get_roles(user):
+		return
+
+	boss = closest_boss_user(requester)
+	if not boss:
+		frappe.logger("aig_custom_theme").warning(
+			"AIG closest-boss guard: no boss on record for requester %s on %s; "
+			"letting the role-based approver through." % (requester, doc.name)
+		)
+		return
+
+	if user != boss:
+		boss_name = frappe.db.get_value("User", boss, "full_name") or boss
+		frappe.throw(
+			_(
+				"AIG: this stock request is waiting for {0}'s closest boss ({1}). "
+				"You are not the approver for this request."
+			).format(requester, boss_name),
+			frappe.PermissionError,
+		)
+
 # ------------------------------------------------------------------ notifications
 def _notify(user, subject, message, document_type=None, document_name=None):
 	"""One Notification Log row per user/subject per day -- the dedupe key."""

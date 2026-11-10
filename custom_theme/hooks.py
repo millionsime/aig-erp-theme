@@ -395,6 +395,7 @@ _INV = "custom_theme.aig_custom_theme.inventory.guards"
 doc_events.update(
 	{
 		"Item": {"validate": f"{_INV}.apply_item_group_defaults"},
+		"Material Request": {"validate": f"{_INV}.enforce_closest_boss"},
 		"Stock Entry": {
 			"before_validate": f"{_INV}.classify_stock_entry",
 			"before_submit": f"{_INV}.validate_store_manager_approval",
