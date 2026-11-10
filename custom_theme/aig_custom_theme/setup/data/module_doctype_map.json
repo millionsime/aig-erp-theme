@@ -1,6 +1,12 @@
 {
 	"_comment": "Developer guardrail map: each AIG * Developer role may create/edit only builder records (Client Script, Server Script, Workflow, Custom Field, Property Setter, Print Format, Report) whose target doctype falls in its module's doctype list. Core doctypes (Company, Account, Cost Center, User, Role, DocPerm, Fiscal Year...) are unreachable for these roles because they have no Standard permissions on them at all.",
-	"guarded_doctypes": ["Client Script", "Server Script", "Workflow", "Custom Field", "Property Setter"],
+	"guarded_doctypes": [
+		"Client Script",
+		"Server Script",
+		"Workflow",
+		"Custom Field",
+		"Property Setter"
+	],
 	"reference_field": {
 		"Client Script": "dt",
 		"Server Script": "reference_doctype",
@@ -9,10 +15,58 @@
 		"Property Setter": "doc_type"
 	},
 	"developers": {
-		"AIG Procurement Developer": { "module": "Procurement", "doctypes": ["Material Request", "Purchase Order", "Request for Quotation", "Supplier Quotation", "Supplier"] },
-		"AIG HR Developer": { "module": "HR", "doctypes": ["Employee", "Leave Application", "Leave Type", "Leave Allocation", "Salary Slip", "Payroll Entry"] },
-		"AIG Inventory Developer": { "module": "Inventory", "doctypes": ["Item", "Warehouse", "Material Request", "Stock Entry", "Quality Inspection", "Purchase Receipt", "Delivery Note"] },
-		"AIG Asset Developer": { "module": "Asset", "doctypes": ["Asset", "Asset Category", "Asset Movement", "Asset Maintenance", "Asset Repair"] }
+		"AIG Procurement Developer": {
+			"module": "Procurement",
+			"doctypes": [
+				"Material Request",
+				"Purchase Order",
+				"Request for Quotation",
+				"Supplier Quotation",
+				"Supplier"
+			]
+		},
+		"AIG HR Developer": {
+			"module": "HR",
+			"doctypes": [
+				"Employee",
+				"Leave Application",
+				"Leave Type",
+				"Leave Allocation",
+				"Salary Slip",
+				"Payroll Entry"
+			]
+		},
+		"AIG Inventory Developer": {
+			"module": "Inventory",
+			"doctypes": [
+				"Item",
+				"Item Group",
+				"UOM",
+				"UOM Category",
+				"Warehouse",
+				"Warehouse Type",
+				"Material Request",
+				"Stock Entry",
+				"Stock Entry Type",
+				"Stock Reconciliation",
+				"Stock Ledger Entry",
+				"Bin",
+				"Quality Inspection",
+				"Purchase Receipt",
+				"Delivery Note",
+				"Price List"
+			]
+		},
+		"AIG Asset Developer": {
+			"module": "Asset",
+			"doctypes": [
+				"Asset",
+				"Asset Category",
+				"Asset Movement",
+				"Asset Maintenance",
+				"Asset Repair"
+			]
+		}
 	},
 	"_todo_next_layer": "TODO(next layer): per-module Print Format / Report scoping once those layers exist."
 }

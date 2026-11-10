@@ -346,7 +346,9 @@ def adopt_adjustment_account():
 
 
 def run_all(report_only=False):
-	frappe.only_for("System Manager")
+	# in_patch / in_install: migrate and after_install run without a user context.
+	if not (frappe.flags.in_patch or frappe.flags.in_install):
+		frappe.only_for("System Manager")
 	if report_only:
 		log(
 			f"uoms={frappe.db.count('UOM')} item_groups={frappe.db.count('Item Group')} "
