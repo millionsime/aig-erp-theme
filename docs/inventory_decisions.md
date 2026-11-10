@@ -101,3 +101,29 @@ table for status:
   exist).
 - `TODO(procurement)` extension point is documented on the
   `aig_forwarded_to_procurement` field itself.
+
+
+## Pass 2 additions (2026-11-10)
+
+| Decision | Why | Change it in |
+| --- | --- | --- |
+| Gate defaults are written into `tabSingles` by the seed, not just declared as DocType defaults | An unset Check reads back as `0`, which silently disabled every new gate on a site whose Single had never been saved | `SETTING_DEFAULTS` in `setup/inventory_seed.py` |
+| Warehouse `mixed`/`isolated` + owning enterprise stay in `setup/data/warehouses.json`; a warehouse not in the file falls back to `Warehouse.aig_cost_center` | The data file is the declared source of truth, and the fallback keeps stores created later from becoming silently "mixed" | `data/warehouses.json` |
+| Every Material Transfer needs Store Manager approval; isolated issues need it too. Both switches default on | Brief. Switching either off leaves the cross-enterprise block independent | `AIG Minimum ERP Settings` |
+| Cross-enterprise block applies only isolated -> isolated; isolated -> mixed is allowed | Brief ("target is a mixed warehouse") | `block_cross_enterprise_transfer` |
+| `enable_closest_boss_guard` defaults **on** | Brief default. It is enforced by `guards.py` as an extra check on the existing `Pending Enterprise Approval` transition — never by replacing the existing approver role | `AIG Minimum ERP Settings` |
+| No Material Request workflow state was added, renamed or removed | Existing behaviour is the source of truth for this pass | — |
+| Reorder alerts and the count reminder are Notification Log rows, one per user+subject+day | Dedupe without a new table, visible in the desk bell | `guards.py` `_notify()` |
+| `is_default` on Holiday List is advisory | ERPNext v16 Holiday List has no such field; the seed sets it only if the field exists | `data/holiday_lists.json` |
+| The 2018-EC tail list carries the weekly off only, with no public holidays | No fixed Ethiopian public holiday falls between 2026-07-08 and 2026-09-10; both 2026 Eid dates fall before it. Flagged in the data file rather than guessed | `data/holiday_lists.json` |
+
+### Environment defects found and fixed outside git
+
+`sites/apps.txt` in the bench container listed only `erpnext`, `frappe`, `hrms`.
+Frappe builds its module->app map from that file, so **every module of
+`custom_theme` was invisible**: model sync never created `AIG Minimum ERP
+Settings`, and any code path that loaded one of the app's doctype controllers
+raised `Module AIG Custom Theme not found`. Appending `custom_theme` to
+`sites/apps.txt` and clearing the cache fixed both. This is a bench-level file,
+not repository content — a fresh container from the same image will need the
+same line, and the Dockerfile/compose for that image should add it.
