@@ -269,8 +269,9 @@ def seed_holiday_lists():
             continue
         doc = frappe.new_doc("Holiday List")
         doc.holiday_list_name = hl["name"]
-        # Only one list may be the site default; the data file decides which.
-        doc.is_default = 1 if hl.get("is_default") else 0
+        # v16 Holiday List has no is_default field; the data file key is advisory.
+        if frappe.get_meta("Holiday List").has_field("is_default"):
+            doc.is_default = 1 if hl.get("is_default") else 0
         doc.weekly_off = hl.get("weekly_off")
         doc.company = hl["company"]
         doc.from_date = getdate(hl["from_date"])
