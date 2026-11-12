@@ -96,10 +96,33 @@ def company_exists():
 
 
 # ------------------------------------------------------------- fiscal years
+def _overlapping_fiscal_year(start_date, end_date):
+    """Name of an existing fiscal year that covers any part of the range."""
+    return frappe.db.get_value(
+        "Fiscal Year",
+        {
+            "year_start_date": ("<=", end_date),
+            "year_end_date": (">=", start_date),
+        },
+        "name",
+    )
+
+
 def seed_fiscal_years():
+    # Fiscal Year.validate() rejects overlapping ranges outright, so a site that
+    # already has its own fiscal year (ERPNext creates e.g. "2026-2027" for a
+    # new company) would abort the whole migrate. Skip what the site already
+    # covers instead of fighting site data -- this patch must stay re-runnable
+    # on a live database, not just on a fresh one.
     n = 0
     for fy in _load("fiscal_years.json")["fiscal_years"]:
         if frappe.db.exists("Fiscal Year", fy["name"]):
+            continue
+        overlap = _overlapping_fiscal_year(fy["year_start_date"], fy["year_end_date"])
+        if overlap:
+            log(
+                f"  fiscal year skipped: {fy['name']} overlaps existing {overlap}"
+            )
             continue
         frappe.get_doc(
             {
