@@ -179,6 +179,102 @@ def seed_cost_centers():
     log(f"  cost centers: {created} created")
 
 
+# ------------------------------------------------------- inventory account
+def _leaf_stock_accounts(company):
+    return frappe.get_all(
+        "Account",
+        filters={"company": company, "is_group": 0, "account_type": "Stock", "disabled": 0},
+        fields=["name"],
+        order_by="name asc",
+        limit_page_length=0,
+    )
+
+
+def _create_inventory_account(company):
+    """Last resort for a chart with no Stock-typed leaf account: one is needed
+    before any warehouse can be validated. Parent is the existing Inventory
+    group when the chart has one, else Current Assets, else the Assets root."""
+    parent = frappe.db.get_value(
+        "Account",
+        {"company": company, "is_group": 1, "root_type": "Asset", "name": ("like", "%Inventory%")},
+        "name",
+    )
+    for candidate in ("%Current Assets%", "%Assets%"):
+        if parent:
+            break
+        parent = frappe.db.get_value(
+            "Account",
+            {"company": company, "is_group": 1, "root_type": "Asset", "name": ("like", candidate)},
+            "name",
+        )
+    if not parent:
+        log("  inventory account: no parent group found -- cannot create one")
+        return None
+    doc = frappe.get_doc(
+        {
+            "doctype": "Account",
+            "account_name": "Stock In Hand",
+            "company": company,
+            "parent_account": parent,
+            "account_type": "Stock",
+            "is_group": 0,
+        }
+    )
+    doc.insert(ignore_permissions=True)
+    log(f"  inventory account created: {doc.name} (under {parent})")
+    return doc.name
+
+
+def ensure_inventory_account(company=None):
+    """Give the company a default inventory account before creating warehouses.
+
+    Warehouse.validate_inventory_account() only runs for new warehouses on a
+    company with perpetual inventory enabled, but then it resolves an account
+    in this order: the warehouse, its parent's account, the company's Default
+    Inventory Account, and finally 'the only Stock-typed leaf account'. A
+    company inserted programmatically (as the seed does) never gets that
+    default, and the AIG chart has six Stock-typed leaves, so that last rule
+    does not apply either and the insert throws -- which aborts the whole
+    migrate on a site that has perpetual inventory switched on.
+
+    An existing default is never replaced: choosing inventory accounts per
+    warehouse is a business decision, so only the missing case is filled in.
+    """
+    company = company or company_name()
+    if not frappe.db.exists("Company", company):
+        return None
+
+    current = frappe.db.get_value("Company", company, "default_inventory_account")
+    if current and frappe.db.exists("Account", current) \
+            and not frappe.db.get_value("Account", current, "is_group"):
+        return current
+
+    candidates = [a["name"] for a in _leaf_stock_accounts(company)]
+    chosen = None
+    # Deterministic, boring preference order so the same chart always resolves
+    # to the same account; the user can change it in Desk afterwards.
+    for token in ("stock in hand", "raw material", "inventory", "stock"):
+        for name in candidates:
+            if token in name.lower():
+                chosen = name
+                break
+        if chosen:
+            break
+    if not chosen and candidates:
+        chosen = candidates[0]
+    if not chosen:
+        chosen = _create_inventory_account(company)
+    if not chosen:
+        log("  default inventory account: none available -- warehouses may fail")
+        return None
+
+    frappe.db.set_value("Company", company, "default_inventory_account", chosen)
+    # Company is read through the cache by get_warehouse_account().
+    frappe.clear_document_cache("Company", company)
+    log(f"  default inventory account: {chosen}")
+    return chosen
+
+
 # ---------------------------------------------------------------- warehouses
 def seed_warehouses():
     data = _load("warehouses.json")
@@ -380,6 +476,7 @@ def run_all(report_only=False):
     seed_company()
     seed_fiscal_years()
     seed_cost_centers()
+    ensure_inventory_account()
     seed_warehouses()
     seed_departments()
     seed_designations()
