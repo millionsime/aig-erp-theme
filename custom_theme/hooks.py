@@ -10,7 +10,7 @@ app_include_js = "/assets/custom_theme/js/aig_desk.js?v=2"
 
 # Auth pages (login, forgot password, etc.)
 # Bump ?v= when changing these assets so browsers drop their cached copy.
-web_include_css = "/assets/custom_theme/css/aig_login.css?v=4"
+web_include_css = "/assets/custom_theme/css/aig_login.css?v=5"
 web_include_js = "/assets/custom_theme/js/aig_login.js?v=4"
 
 # AIG configuration fixtures (2026-09-28): everything the site carried only in
