@@ -224,6 +224,10 @@ def seed_warehouses():
 def seed_departments():
     data = _load("departments.json")
     company = data["company"]
+    # The data file calls the tree root "all_departments"; older copies used
+    # "parent_department". Accept either rather than dying on a KeyError, which
+    # aborts the whole migrate.
+    parent = data.get("parent_department") or data.get("all_departments")
     ab = abbr()
     created = 0
     for d in data["departments"]:
@@ -235,11 +239,11 @@ def seed_departments():
                 "doctype": "Department",
                 "department_name": d,
                 "company": company,
-                "parent_department": data["parent_department"],
+                "parent_department": parent,
             }
         ).insert(ignore_permissions=True)
         created += 1
-    log(f"  departments: {created} created (under: {data['parent_department']})")
+    log(f"  departments: {created} created (under: {parent})")
 
 
 # -------------------------------------------------------------- designations
