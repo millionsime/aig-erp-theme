@@ -79,7 +79,7 @@ fixtures = [
 	# AIG CoA importer chain runs (aig-erp-config scripts 80-86). Importing them
 	# before that aborts every fresh install with a LinkValidationError. They are
 	# rebuilt by:  bench --site <site> execute aig_custom_theme.setup.ensure_tax_setup.run
-	{"dt": "Module Def", "filters": [["name", "like", "AIG%"]]},
+	{"dt": "Module Def", "filters": [["name", "like", "AIG%"], ["name", "!=", "AIG Ethiopian Calendar"]]},
 	{"dt": "Print Format", "filters": [["name", "like", "AIG%"]]},
 	{"dt": "Workspace", "filters": [["name", "like", "AIG%"]]},
 	# Workflow fixture chain (2026-10-31): a Workflow validates its states and
