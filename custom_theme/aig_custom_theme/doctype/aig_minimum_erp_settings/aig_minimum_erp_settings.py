@@ -1,5 +1,5 @@
 # AIG Minimum ERP Settings -- single record (§2.8 threshold et al.).
-# Seeded with defaults by aig_custom_theme.setup.seed.seed_settings().
+# Defaults come from the DocType field definitions.
 
 from frappe.model.document import Document
 

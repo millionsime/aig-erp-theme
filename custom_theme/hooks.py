@@ -1,7 +1,7 @@
 app_name = "custom_theme"
 app_title = "AIG Custom Theme"
 app_publisher = "aig-tech"
-app_description = "AIG theme + foundation layer (seed, org hooks, guardrails)"
+app_description = "AIG theme + foundation layer (org hooks, guardrails)"
 app_email = "simemillion@gmail.com"
 app_license = "mit"
 
@@ -71,8 +71,7 @@ fixtures = [
 	# are foundation-owned; Sick keeps its AIG row so no MIS STAT uses it.
 	{"dt": "Leave Type", "filters": [["name", "in", ["Annual", "Sick", "Maternity"]]]},
 	# NOTE: User Permission is per-user data (docs section 3.4) and is
-	# deliberately NOT a fixture anymore. Use the helper instead:
-	#   bench --site <site> execute aig_custom_theme.setup.apply_user_permissions.run
+	# deliberately NOT a fixture. Add the rows on the site itself.
 	# CoA-2.0-linked records are NOT fixtures (2026-10-31): the AIG tax templates
 	# and the two AIG Tax Withholding Categories hardwire CoA account names
 	# (21402 VAT 15%, 21401 VAT-WH 7.5%, 21403 WHT 3%) that only exist AFTER the
@@ -183,10 +182,9 @@ fixtures = [
 # Installation
 # ------------
 
-# after_install seed: on a FRESH site install-app, this seeds company, fiscal
-# years, cost centers, warehouses, departments, designations, roles and the
-# settings single from aig_custom_theme/setup/data/*.json. Safe to re-run.
-after_install = "custom_theme.aig_custom_theme.setup.seed.run_all"
+# No after_install seed: this app ships no master data. Company, fiscal years,
+# cost centers, warehouses, departments, designations and roles are created on
+# the site itself, not by the app.
 
 # Uninstallation
 # ------------
