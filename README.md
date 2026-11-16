@@ -9,7 +9,27 @@ committee guard, developer guardrails, permissions).
 |---|---|
 | Configuration (custom fields, property setters, AIG roles, workflows incl. AIG Leave Approval, holiday lists, fix leave types, Custom DocPerms filtered to AIG roles) | `fixtures/` re-applied on every `bench migrate`; tax templates/withholding categories are runtime-built instead (see step 5) |
 | New DocTypes (AIG Assigned Committee Member child, AIG Minimum ERP Settings single) | `aig_custom_theme/doctype/` (app JSONs) |
-| Core logic (Leave Approver from Reports To, no-self-approval leave guard, committee `only assigned member may decide` guard, warehouse user permission helper, developer guardrails) | Python in `aig_custom_theme/` wired via `hooks.py` (`doc_events`, `permission_query_conditions`, `has_permission`) — deliberately NOT database Server Scripts |
+| Core logic (Leave Approver from Reports To, no-self-approval leave guard, committee `only assigned member may decide` guard, developer guardrails) | Python in `aig_custom_theme/` wired via `hooks.py` (`doc_events`, `permission_query_conditions`, `has_permission`) — deliberately NOT database Server Scripts |
+
+### Master data on a fresh site
+
+This app ships **no seed data** and has no `after_install` hook, so a new site
+starts with ERPNext's standard set-up only. Create the masters yourself, in this
+order:
+
+1. **Company** — `Adama Investment Group`, abbr `AIG`.
+2. **Cost centers** — the enterprise tree, in ERPNext's Cost Center list (the
+   `aig-erp-config` script `56_build_c_cost_centers.py` builds the standard AIG
+   tree).
+3. **Warehouses** — add each store and set `Warehouse.aig_cost_center` (the
+   isolation key). A store carrying an enterprise is treated as isolated; a
+   store without it is treated as shared/mixed.
+4. **Settings** — save `AIG Minimum ERP Settings` once; an unsaved single reads
+   every gate back as `0`.
+
+Roles, custom fields, workflows, print formats and leave types still arrive via
+`fixtures/`. UOMs, Item Groups, Stock Entry Types, Price Lists, Warehouse Types
+and Stock Settings are site configuration, not app content.
 
 ### Deploying to production
 

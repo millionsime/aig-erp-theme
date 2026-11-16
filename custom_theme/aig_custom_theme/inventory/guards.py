@@ -6,20 +6,16 @@
 #  - "AIG - MR Approval Guard" still blocks self-approval on a request.
 # These hooks only add the store-manager gate and the cross-enterprise rules.
 #
-# Warehouse ownership (mixed / isolated + owning enterprise) is read from
-# setup/data/warehouses.json, never from hard-coded store names.
-
-import json
-import os
+# Warehouse ownership is derived from the Warehouse itself: a store carrying
+# Warehouse.aig_cost_center belongs to that enterprise (isolated); a store
+# without one is shared (mixed). Never hard-code store names here.
 
 import frappe
 from frappe import _
 from frappe.utils import add_days, cint, getdate, today
 
 SETTINGS_DOCTYPE = "AIG Minimum ERP Settings"
-WAREHOUSE_DATA = os.path.join(
-	os.path.dirname(__file__), "..", "setup", "data", "warehouses.json"
-)
+WAREHOUSE_COST_CENTER_FIELD = "aig_cost_center"
 
 ISTOCK_ITEM_FLAGS = (
 	("aig_is_stock_item", "is_stock_item", 1),
@@ -38,31 +34,16 @@ def _setting(field, default=None):
 	return default if value in (None, "") else value
 
 
-def _warehouse_profiles():
-	"""name -> (type, enterprise) from the warehouse data file."""
-	try:
-		with open(WAREHOUSE_DATA, encoding="utf-8") as f:
-			data = json.load(f)
-	except OSError:
-		return {}
-	out = {}
-	root = data.get("root") or {}
-	if root.get("name"):
-		out[root["name"]] = (root.get("type") or "mixed", root.get("enterprise"))
-	for node in data.get("nodes", []):
-		out[node["name"]] = (node.get("type") or "mixed", node.get("enterprise"))
-	return out
-
-
 def warehouse_profile(warehouse):
+	"""Return (type, enterprise) for a Warehouse.
+
+	The Warehouse document is the single source of truth: an enterprise link
+	means the store serves that enterprise only (isolated); no link means the
+	store is shared (mixed). Clearing the field is how a store becomes mixed.
+	"""
 	if not warehouse:
 		return ("mixed", None)
-	profile = _warehouse_profiles().get(warehouse)
-	if profile:
-		return profile
-	# Fallback for a warehouse created after the data file: an enterprise link
-	# on the Warehouse means the store belongs to that enterprise only.
-	enterprise = frappe.db.get_value("Warehouse", warehouse, "aig_cost_center")
+	enterprise = frappe.db.get_value("Warehouse", warehouse, WAREHOUSE_COST_CENTER_FIELD)
 	return ("isolated", enterprise) if enterprise else ("mixed", None)
 
 
@@ -436,6 +417,14 @@ def inventory_gate_report():
 		"block_cross_enterprise_transfer": cint(_setting("block_cross_enterprise_transfer", 1)),
 		"enable_reorder_alerts": cint(_setting("enable_reorder_alerts", 1)),
 		"enable_stock_count_reminder": cint(_setting("enable_stock_count_reminder", 1)),
-		"isolated_warehouses": [w for w, p in _warehouse_profiles().items() if p[0] == "isolated"],
-		"mixed_warehouses": [w for w, p in _warehouse_profiles().items() if p[0] == "mixed"],
+		"isolated_warehouses": frappe.get_all(
+			"Warehouse",
+			filters={WAREHOUSE_COST_CENTER_FIELD: ["is", "set"]},
+			pluck="name",
+		),
+		"mixed_warehouses": frappe.get_all(
+			"Warehouse",
+			filters={WAREHOUSE_COST_CENTER_FIELD: ["is", "not set"]},
+			pluck="name",
+		),
 	}

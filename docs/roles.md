@@ -1,8 +1,9 @@
 # AIG role inventory
 
-31 `AIG *` roles exist on the site (all created by the foundation seed, all
-included in the `Role` fixture filter `name like AIG%`). One line each, with
-redundancy flags at the end.
+31 `AIG *` roles exist on the site, all of them still shipped by the `Role`
+fixture filter `name like AIG%` (the foundation seed that first created them was
+removed in commit `049e642`, so the fixture is now the only carrier). One line
+each, with redundancy flags at the end.
 
 ## Executive and oversight
 

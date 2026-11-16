@@ -6,8 +6,9 @@ app_email = "simemillion@gmail.com"
 app_license = "mit"
 
 # ------------------------------------------------------------------ roles
-# The AIG-prefixed role set (mapping in aig_custom_theme/setup/data/role_map.json).
-# Used to filter Custom DocPerm fixtures so we ship only permissions we own.
+# The AIG-prefixed role set (inventory in docs/roles.md, shipped by the
+# ["Role", "like", "AIG%"] fixture filter). Used to filter Custom DocPerm
+# fixtures so we ship only permissions we own.
 AIG_ROLES = [
 	"AIG Accountant",
 	"AIG Asset Developer",

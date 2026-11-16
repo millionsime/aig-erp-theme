@@ -63,9 +63,11 @@ Guards already in force (server scripts, untouched):
 | `apply_item_group_defaults` | Item `validate` | New Items inherit the group's batch / serial / expiry / fixed-asset flags. |
 | `enforce_closest_boss` | Material Request `validate` | On exit from `Pending Store Review` / `Pending Enterprise Approval` the acting user must be the requester's closest boss (walked up `Employee.reports_to`). No boss on record → warning, not a block. Administrator / System Manager act on behalf. Never replaces the workflow's role rules. |
 
-Warehouse ownership is read from `setup/data/warehouses.json`
-(`type: mixed|isolated`, `enterprise`), never from store-name string matching —
-a store added later falls back to `Warehouse.aig_cost_center`.
+Warehouse ownership comes from `Warehouse.aig_cost_center` only, never from
+store-name string matching: a store carrying an enterprise is `isolated` for that
+enterprise, a store without one is `mixed`. Clearing the field is how a store
+becomes shared. (The `setup/data/warehouses.json` list that used to declare this
+was removed with the seed layer in commit `049e642`.)
 
 The existing `AIG - SE Guard Raw Submit` (posting only via `Posted`) and
 `AIG - SE Issue Validation` (approved Model 19 + quantity ceiling) still run

@@ -15,7 +15,8 @@ leave allocations:   8   (Annual/Sick/Maternity for 4 of the users)
 
 The factory refuses to run without `developer_mode` or `AIG_TEST_SITE=1`.
 
-**Blocked:** stock seeding. `create_stock()` opens stock with a Stock
+**Blocked:** stock seeding *by the test factory* (`create_stock()` — test data, not
+the app seed layer that was removed in `049e642`). It opens stock with a Stock
 Reconciliation, which fails with:
 
 ```
