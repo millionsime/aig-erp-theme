@@ -62,8 +62,11 @@ fixtures = [
 	# permissions bound to roles we own; desktop/standard roles keep their own
 	# erpnext/ hrms-defined rows.
 	{"dt": "Custom DocPerm", "filters": [["role", "in", AIG_ROLES]]},
-	{"dt": "Custom Field", "filters": [["fieldname", "like", "aig%"]]},
-	{"dt": "Property Setter"},
+	# Standard (2026-11-17): capture EVERY field / form change a person makes in
+	# the UI. is_system_generated=1 marks rows erpnext/hrms create from code;
+	# those are re-created by their own apps and are deliberately skipped.
+	{"dt": "Custom Field", "filters": [["is_system_generated", "=", 0]]},
+	{"dt": "Property Setter", "filters": [["is_system_generated", "=", 0]]},
 	{"dt": "Server Script"},
 	{"dt": "Client Script"},
 	# Workflow moves below: it imports AFTER its Workflow State / Action rows.
@@ -80,7 +83,9 @@ fixtures = [
 	# before that aborts every fresh install with a LinkValidationError. They are
 	# rebuilt by:  bench --site <site> execute aig_custom_theme.setup.ensure_tax_setup.run
 	{"dt": "Module Def", "filters": [["name", "like", "AIG%"], ["name", "!=", "AIG Ethiopian Calendar"]]},
-	{"dt": "Print Format", "filters": [["name", "like", "AIG%"]]},
+	{"dt": "Print Format", "filters": [["standard", "=", "No"]]},
+	{"dt": "Report", "filters": [["is_standard", "=", "No"]]},
+	{"dt": "Notification", "filters": [["is_standard", "=", 0]]},
 	{"dt": "Workspace", "filters": [["name", "like", "AIG%"]]},
 	# Workflow fixture chain (2026-10-31): a Workflow validates its states and
 	# actions via Link, so own rows MUST import before the Workflow docs. On a
