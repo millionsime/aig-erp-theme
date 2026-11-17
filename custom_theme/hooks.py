@@ -57,6 +57,8 @@ web_include_js = "/assets/custom_theme/js/aig_login.js?v=4"
 # build-out scripts in ~/aig-erp-config/scripts remain the source of truth
 # for HOW these records were built; the fixtures capture the resulting state
 # for reproducible installs.
+from custom_theme.fixture_lists import LEGACY_PROPERTY_SETTERS
+
 fixtures = [
 	# Custom DocPerm filtered to the AIG role set (2026-10-06): we only ship
 	# permissions bound to roles we own; desktop/standard roles keep their own
@@ -66,7 +68,10 @@ fixtures = [
 	# the UI. is_system_generated=1 marks rows erpnext/hrms create from code;
 	# those are re-created by their own apps and are deliberately skipped.
 	{"dt": "Custom Field", "filters": [["is_system_generated", "=", 0]]},
-	{"dt": "Property Setter", "filters": [["is_system_generated", "=", 0]]},
+	{"dt": "Property Setter", "or_filters": [
+		["is_system_generated", "=", 0],
+		["name", "in", LEGACY_PROPERTY_SETTERS],
+	]},
 	{"dt": "Server Script"},
 	{"dt": "Client Script"},
 	# Workflow moves below: it imports AFTER its Workflow State / Action rows.
