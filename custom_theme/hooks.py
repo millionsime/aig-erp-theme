@@ -57,7 +57,14 @@ web_include_js = "/assets/custom_theme/js/aig_login.js?v=4"
 # build-out scripts in ~/aig-erp-config/scripts remain the source of truth
 # for HOW these records were built; the fixtures capture the resulting state
 # for reproducible installs.
-from custom_theme.fixture_lists import LEGACY_PROPERTY_SETTERS
+from custom_theme.fixture_lists import (
+	AIG_HR_CLIENT_SCRIPTS,
+	AIG_HR_FIELDS,
+	AIG_HR_PROPERTY_SETTERS,
+	AIG_HR_ROLES,
+	AIG_HR_SERVER_SCRIPTS,
+	LEGACY_PROPERTY_SETTERS,
+)
 
 fixtures = [
 	# Custom DocPerm filtered to the AIG role set (2026-10-06): we only ship
@@ -67,15 +74,15 @@ fixtures = [
 	# Standard (2026-11-17): capture EVERY field / form change a person makes in
 	# the UI. is_system_generated=1 marks rows erpnext/hrms create from code;
 	# those are re-created by their own apps and are deliberately skipped.
-	{"dt": "Custom Field", "filters": [["is_system_generated", "=", 0]]},
-	{"dt": "Property Setter", "or_filters": [
+	{"dt": "Custom Field", "filters": [["is_system_generated", "=", 0], ["name", "not in", AIG_HR_FIELDS]]},
+	{"dt": "Property Setter", "filters": [["name", "not in", AIG_HR_PROPERTY_SETTERS]], "or_filters": [
 		["is_system_generated", "=", 0],
 		["name", "in", LEGACY_PROPERTY_SETTERS],
 	]},
-	{"dt": "Server Script"},
-	{"dt": "Client Script"},
+	{"dt": "Server Script", "filters": [["name", "not in", AIG_HR_SERVER_SCRIPTS]]},
+	{"dt": "Client Script", "filters": [["name", "not in", AIG_HR_CLIENT_SCRIPTS]]},
 	# Workflow moves below: it imports AFTER its Workflow State / Action rows.
-	{"dt": "Role", "filters": [["name", "like", "AIG%"]]},
+	{"dt": "Role", "filters": [["name", "like", "AIG%"], ["name", "not in", AIG_HR_ROLES]]},
 	# Leave Types we own (the 3 the foundation layer ships): Annual + Maternity
 	# are foundation-owned; Sick keeps its AIG row so no MIS STAT uses it.
 	{"dt": "Leave Type", "filters": [["name", "in", ["Annual", "Sick", "Maternity"]]]},
@@ -87,7 +94,7 @@ fixtures = [
 	# AIG CoA importer chain runs (aig-erp-config scripts 80-86). Importing them
 	# before that aborts every fresh install with a LinkValidationError. They are
 	# rebuilt by:  bench --site <site> execute aig_custom_theme.setup.ensure_tax_setup.run
-	{"dt": "Module Def", "filters": [["name", "like", "AIG%"], ["name", "!=", "AIG Ethiopian Calendar"]]},
+	{"dt": "Module Def", "filters": [["name", "like", "AIG%"], ["name", "not in", ["AIG Ethiopian Calendar", "AIG HR"]]]},
 	{"dt": "Print Format", "filters": [["standard", "=", "No"]]},
 	{"dt": "Report", "filters": [["is_standard", "=", "No"]]},
 	{"dt": "Notification", "filters": [["is_standard", "=", 0]]},

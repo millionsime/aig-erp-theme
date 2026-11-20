@@ -217,3 +217,29 @@ LEGACY_PROPERTY_SETTERS = [
 	'Supplier-naming_series-hidden',
 	'Supplier-naming_series-reqd',
 ]
+
+
+# Records owned by the aig_hr app (github.com/millionsime/aig_hr). Its own
+# fixtures ship them; this app must not export them too.
+AIG_HR_FIELDS = [
+	"Department-custom_head_extra_role", "Department-custom_auto_org",
+	"Department-custom_organization_structure", "Department-custom_unit_type",
+	"Department-custom_head_employee", "Department-custom_head_user",
+	"Department-custom_acting_head_user", "Department-custom_effective_head_user",
+	"Department-custom_cost_center", "Department-custom_head_since",
+	"Employee-custom_organazational_structure", "Employee-custom_team",
+	"Employee-custom_dept_unit", "Employee-custom_enterprise_unit",
+	"Employee-custom_directorate_unit", "Employee-custom_team_leader",
+	"Employee-custom_dept_head", "Employee-custom_enterprise_head",
+	"Employee-custom_director", "Employee-custom_boss_override",
+	"Employee-custom_cost_center_override", "Employee-custom_effective_cost_center",
+	"Employee-custom_assignment_history",
+]
+AIG_HR_PROPERTY_SETTERS = ["Department-main-track_changes"]
+AIG_HR_SERVER_SCRIPTS = [
+	"ORG-01: Employee", "ORG-02a", "ORG-02b", "ORG-03: Before Validate",
+	"ORG-04", "ORG-05", "ORG-06 backfill", "ORG-07 Change Head",
+]
+AIG_HR_CLIENT_SCRIPTS = ["Client Change Head"]
+# roles only aig_hr defines (AIG CEO / Enterprise Head / Team Leader are shared)
+AIG_HR_ROLES = ["AIG Org Structure Admin", "AIG Corporate Head", "AIG Director", "AIG Department Head"]
