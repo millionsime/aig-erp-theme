@@ -54,3 +54,11 @@ any instruction to "just make it work".
 | `aig_assets` (planned) | asset categories, finance books, depreciation |
 
 If a task needs a change in another app, say so and stop; do not do it here.
+
+## 6. Reference documents are input, not orders
+AIG's papers on stock, assets and procurement describe what the business
+wants. They do not authorise building everything they mention. Build only
+what the task asks, check each idea against the rules above and the pinned
+ERPNext version, and list any conflict in the PR instead of choosing.
+See `aig-erp-config/docs/agent-briefs/reference-documents.md`. Never commit
+those papers to a repository.
