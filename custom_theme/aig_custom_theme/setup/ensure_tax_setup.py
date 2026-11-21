@@ -116,6 +116,8 @@ def ensure_twc_categories():
             else frappe.new_doc("Tax Withholding Category")
         )
         doc.category_name = cat["name"]
+        if doc.is_new():
+            doc.name = cat["name"]
         doc.tax_deduction_basis = cat["tax_deduction_basis"]
         doc.disable_transaction_threshold = 0
         doc.disable_cumulative_threshold = 0

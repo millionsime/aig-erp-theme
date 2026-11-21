@@ -93,7 +93,7 @@
   "dt": "Stock Entry",
   "enabled": 1,
   "modified": "2026-09-26 10:10:43.224138",
-  "module": "AIG HR",
+  "module": "AIG Custom Theme",
   "name": "AIG - SE CC Intercept",
   "script": "// AIG - SE CC Intercept: ERPNext's async item-detail fill stamps the\n// Company default Cost Center (Head Office - AIG) onto rows. For\n// enterprise-scoped users that CC fails the doc-level CREATE check at Save\n// ('You need the create permission on Stock Entry'). This row-level handler\n// fires the instant the fill writes cost_center (model event, no timeouts)\n// and reverts the poison to the enterprise CC (header) or empty.\n(function () {\n\tvar POISON = \"Head Office - AIG\";\n\tfunction target(frm) {\n\t\treturn frm.doc.aig_cost_center || frm.doc.aig_dest_cost_center || null;\n\t}\n\tfrappe.ui.form.on(\"Stock Entry Item\", {\n\t\tcost_center: function (frm, cdt, cdn) {\n\t\t\tvar row = locals[cdt] && locals[cdt][cdn];\n\t\t\tif (!row || !row.cost_center) return;\n\t\t\tvar want = target(frm);\n\t\t\tif (row.cost_center === POISON && row.cost_center !== want) {\n\t\t\t\tfrappe.model.set_value(cdt, cdn, \"cost_center\", want || null);\n\t\t\t}\n\t\t}\n\t});\n\tfrappe.ui.form.on(\"Stock Entry\", {\n\t\trefresh: function (frm) {\n\t\t\t// a new doc must never carry the Company default as its dimension\n\t\t\tif (frm.doc.__islocal && frm.doc.aig_cost_center === POISON) {\n\t\t\t\tfrm.set_value(\"aig_cost_center\", null);\n\t\t\t}\n\t\t},\n\t\taig_cost_center: function (frm) {\n\t\t\tvar want = target(frm);\n\t\t\t(frm.doc.items || []).forEach(function (row) {\n\t\t\t\tif (row.cost_center === POISON && row.cost_center !== want) {\n\t\t\t\t\tfrappe.model.set_value(row.doctype, row.name, \"cost_center\", want || null);\n\t\t\t\t}\n\t\t\t});\n\t\t}\n\t});\n})();",
   "view": "Form"
@@ -104,7 +104,7 @@
   "dt": "Material Request",
   "enabled": 1,
   "modified": "2026-09-26 10:31:04.146824",
-  "module": "AIG HR",
+  "module": "AIG Custom Theme",
   "name": "AIG - MR CC Intercept",
   "script": "// AIG - MR CC Intercept: ERPNext/the CC-sync script can stamp the root CC\n// or Head Office onto a new Material Request. Enterprise users cannot read\n// such documents at doc level, which silently kills their workflow buttons.\n// This model-event guard instantly reverts those values on a new MR.\n(function () {\n\tvar POISON = [\"Adama Investment Group - AIG\", \"Head Office - AIG\"];\n\tfunction is_poison(v) {\n\t\treturn v && POISON.indexOf(v) !== -1;\n\t}\n\tfrappe.ui.form.on(\"Material Request\", {\n\t\taig_cost_center: function (frm) {\n\t\t\tif (frm.doc.__islocal && is_poison(frm.doc.aig_cost_center)) {\n\t\t\t\tfrm.set_value(\"aig_cost_center\", null);\n\t\t\t}\n\t\t}\n\t});\n\tfrappe.ui.form.on(\"Material Request Item\", {\n\t\tcost_center: function (frm, cdt, cdn) {\n\t\t\tvar row = locals[cdt] && locals[cdt][cdn];\n\t\t\tif (frm.doc.__islocal && row && is_poison(row.cost_center)) {\n\t\t\t\tfrappe.model.set_value(cdt, cdn, \"cost_center\", null);\n\t\t\t}\n\t\t}\n\t});\n})();",
   "view": "Form"
@@ -115,7 +115,7 @@
   "dt": "Item",
   "enabled": 0,
   "modified": "2026-09-29 09:29:49.220244",
-  "module": "AIG HR",
+  "module": "AIG Custom Theme",
   "name": "AIG - Item Code Auto Hint",
   "script": "// AIG - Item Code Auto Hint: demo users never type Item Codes -- the server\n// generates AIG-<group>-<sequence> on save. Make the field read-only with a\n// hint (Administrator keeps manual override).\n(function () {\n\tfrappe.ui.form.on(\"Item\", {\n\t\trefresh: function (frm) {\n\t\t\tif (frappe.session.user === \"Administrator\") return;\n\t\t\tvar df = frm.fields_dict.item_code;\n\t\t\tif (df) {\n\t\t\t\tdf.df.read_only = 1;\n\t\t\t\tdf.df.description = \"Leave empty -- AIG generates the code from the Item Group (AIG-<group>-<sequence>).\";\n\t\t\t\tfrm.refresh_field(\"item_code\");\n\t\t\t}\n\t\t}\n\t});\n})();",
   "view": "Form"
