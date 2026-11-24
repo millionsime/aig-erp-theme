@@ -6,3 +6,4 @@
 # Patches added in this section will be executed after doctypes are migrated
 custom_theme.patches.v1.release_aig_hr_module
 custom_theme.patches.v1.item_naming_by_series
+custom_theme.patches.v2.remove_theme_process_automation

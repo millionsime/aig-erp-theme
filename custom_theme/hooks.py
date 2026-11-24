@@ -79,9 +79,6 @@ fixtures = [
 		["is_system_generated", "=", 0],
 		["name", "in", LEGACY_PROPERTY_SETTERS],
 	]},
-	{"dt": "Server Script", "filters": [["name", "not in", AIG_HR_SERVER_SCRIPTS]]},
-	{"dt": "Client Script", "filters": [["name", "not in", AIG_HR_CLIENT_SCRIPTS]]},
-	# Workflow moves below: it imports AFTER its Workflow State / Action rows.
 	{"dt": "Role", "filters": [["name", "like", "AIG%"], ["name", "not in", AIG_HR_ROLES]]},
 	# Leave Types we own (the 3 the foundation layer ships): Annual + Maternity
 	# are foundation-owned; Sick keeps its AIG row so no MIS STAT uses it.
@@ -99,13 +96,9 @@ fixtures = [
 	{"dt": "Report", "filters": [["is_standard", "=", "No"]]},
 	{"dt": "Notification", "filters": [["is_standard", "=", 0]]},
 	{"dt": "Workspace", "filters": [["name", "like", "AIG%"]]},
-	# Workflow fixture chain (2026-10-31): a Workflow validates its states and
-	# actions via Link, so own rows MUST import before the Workflow docs. On a
-	# fresh install this order is fatal, on frontend it silently skipped all
-	# workflow fixtures for years. Workflow itself last.
-	{"dt": "Workflow State"},
-	{"dt": "Workflow Action Master"},
-	{"dt": "Workflow"},
+	# Workflows, Server Scripts and Client Scripts are no longer theme fixtures
+	# (Nov 2026): each business app owns its own process automation. See
+	# patches/v2/remove_theme_process_automation.py.
 ]
 # NOTE: custom DocTypes (AIG Committee Signoff, AIG Stock Migration Batch/Row)
 # cannot be exported as fixtures outside developer mode; they are created
